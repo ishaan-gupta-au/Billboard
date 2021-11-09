@@ -8,4 +8,5 @@ The [Billboard Charts](https://www.billboard.com/charts) calculate the weekly po
 * How heavily weighted are digital sales, radio success and streams in the calculation of position on the hot 100 charts?
 
 The data analysis was created using R. Please visit the flexdashboard [here](https://ishaan-gupta-au.github.io/Billboard/) to view my data analysis. 
+
 For optimal viewing, please set the browser setting to 75% zoom level.
