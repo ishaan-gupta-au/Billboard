@@ -1,0 +1,3228 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+<title>Billboard Data Analysis</title>
+
+<meta property="og:title" content="Billboard Data Analysis" />
+
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+
+<link rel="icon" href="data:image/x-icon;" type="image/x-icon">
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script type="text/javascript">
+window.FlexDashboardComponents = [];
+</script>
+
+<script src="site_libs/header-attrs-2.10/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/stickytableheaders-0.1.19/jquery.stickytableheaders.min.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.19/datatables.js"></script>
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<style type="text/css">
+
+/*
+ Dashboard CSS from Keen IO Dashboards
+ (https://github.com/keen/dashboards)
+*/
+
+body {
+  background: #f2f2f2;
+  padding: 60px 0 0 8px; /* padding-top overridden by theme */
+}
+
+body hr {
+  border-color: #d7d7d7;
+  margin: 10px 0;
+}
+
+.navbar-inverse .navbar-nav > li > a,
+.navbar .navbar-brand {
+  text-decoration: none;
+}
+
+.navbar-logo {
+  margin-top: 1px;
+}
+
+.navbar-logo img {
+  margin-right: 12px;
+}
+
+.navbar-author {
+  margin-left: 10px;
+  font-size: 15px;
+}
+
+.navbar .dropdown-menu .fa {
+  min-width: 20px;
+}
+
+.navbar .dropdown-menu {
+  min-width: 150px;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.chart-wrapper,
+.nav-tabs-custom,
+.sbframe-commentary
+{
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px;
+  margin-bottom: 8px;
+  margin-right: 8px;
+}
+
+.chart-title {
+  border-bottom: 1px solid #d7d7d7;
+  color: #666;
+  font-size: 14px;
+  font-weight: 300;
+  padding: 7px 10px 4px;
+}
+
+.chart-wrapper .chart-title:empty {
+  display: none;
+}
+
+.chart-wrapper .chart-stage {
+  overflow: hidden;
+  padding: 5px 10px;
+  position: relative;
+}
+
+.chart-wrapper .chart-notes {
+  background: #fbfbfb;
+  border-top: 1px solid #e2e2e2;
+  color: #808080;
+  font-size: 12px;
+  padding: 8px 10px 5px;
+}
+
+/*
+ CSS for handling flexbox layout
+*/
+
+#dashboard-container {
+  visibility: hidden;
+}
+
+.tab-content>.dashboard-page-wrapper.active {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.dashboard-page-wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.dashboard-row-orientation {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.dashboard-row {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.dashboard-row-flex {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.dashboard-column-orientation {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: row;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.dashboard-column {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.chart-wrapper-flex {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.chart-stage-flex {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  position: relative;
+}
+
+.chart-shim {
+  position: absolute;
+  left: 8px; top: 8px; right: 8px; bottom: 8px;
+}
+
+.no-padding .chart-shim {
+  left: 0; top: 0; right: 0; bottom: 0;
+}
+
+.flowing-content-shim {
+  overflow: auto;
+  left: 0; top: 0; right: 0; bottom: 0;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+
+.flowing-content-container {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.chart-stage .table-bordered {
+  border: none;
+}
+
+.chart-stage .table-bordered > tbody > tr > th,
+.chart-stage .table-bordered > tfoot > tr > th,
+.chart-stage .table-bordered > tbody > tr > td,
+.chart-stage .table-bordered > tfoot > tr > td {
+  border: none;
+}
+
+.chart-stage .table-bordered > tbody > tr > td {
+  border-top: 1px solid #dddddd;
+}
+
+.chart-stage .table-bordered > thead > tr > th {
+  border: none;
+  border-bottom: 2px solid #dddddd;
+}
+
+.bootstrap-table table>thead {
+  background-color: #fff;
+}
+
+.bootstrap-table table.data,
+.bootstrap-table table.shiny-table {
+  width: inherit !important;
+}
+
+.bootstrap-table table.data>tbody>tr>th,
+.bootstrap-table table.shiny-table>tbody>tr>th {
+  border-top: none;
+  border-bottom: 2px solid #dddddd;
+  padding: 5px;
+}
+
+.bootstrap-table .data td[align=right] {
+  font-family: inherit;
+}
+
+.chart-wrapper form {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.shiny-input-container label {
+  font-weight: normal;
+}
+
+.chart-stage .html-widget {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-stage .html-widget-static-bound {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.chart-stage .shiny-bound-output {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Omit display of empty paragraphs */
+
+.chart-shim>p:empty {
+  display: none;
+}
+
+.chart-stage>p:empty {
+  display: none;
+}
+
+/* Omit display of special knitr options div*/
+
+.chart-stage .knitr-options {
+  display: none;
+}
+
+/* Automatically resizing images */
+
+.image-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+}
+
+.image-container img {
+  opacity: 0;
+  overflow: hidden;
+}
+
+/* Value box */
+
+.value-box {
+  border-radius: 2px;
+  position: relative;
+  display: block;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.value-box > .inner {
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.value-box .value {
+  font-size: 38px;
+  font-weight: bold;
+  margin: 0 0 3px 0;
+  white-space: nowrap;
+  padding: 0;
+}
+
+.value-box .caption {
+  font-size: 15px;
+}
+.value-box .caption > small {
+  display: block;
+  font-size: 13px;
+  margin-top: 5px;
+}
+
+.value-box .icon i {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 80px;
+  color: rgba(0, 0, 0, 0.15);
+}
+
+.linked-value:hover {
+  cursor: pointer;
+}
+
+.value-box.linked-value:hover {
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* STORYBOARD */
+
+.storyboard-nav button {
+  background: transparent;
+  border: 0;
+  opacity: .3;
+  outline: none;
+  padding: 0;
+}
+
+.storyboard-nav button:hover,
+.storyboard-nav button:hover {
+  opacity: .5;
+}
+
+.storyboard-nav button:disabled,
+.storyboard-nav button:disabled {
+  opacity: .1;
+}
+
+.storyboard-nav .sbnext,
+.storyboard-nav .sbprev {
+  float: left;
+  width: 2%;
+  height: 120px;
+  font-size: 50px;
+}
+
+.storyboard-nav .sbprev {
+  text-align: left;
+  width: 2%;
+}
+
+.storyboard-nav .sbnext {
+  float: right;
+  text-align: right;
+  margin-right: 8px;
+}
+
+.storyboard-nav .sbframelist {
+  margin: 0 auto;
+  width: 94%;
+  height: 120px;
+  overflow: hidden;
+  text-shadow: none;
+  margin-bottom: 8px;
+}
+
+.storyboard-nav .sbframelist ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.storyboard-nav .sbframelist ul li {
+  float: left;
+  width: 270px;
+  height: 100%;
+  padding: 10px 10px 10px 10px;
+  margin-right: 8px;
+  background: #fff;
+  border: 1px solid #e2e2e2;
+  border-radius: 3px;
+  color: #3a3c47;
+  text-align: left;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.storyboard-nav .sbframelist ul li:last-child {
+  margin-right: 0px;
+}
+
+.storyboard-nav .sbframelist ul li.active {
+  color: #fff;
+  background: #B8B8B8;
+}
+
+.sbframe-commentary {
+  width: 300px;
+  background: #fbfbfb;
+  font-size: 14px;
+}
+
+.sbframe-commentary ul {
+  padding-left: 22px;
+}
+
+.sbframe.active {
+  display: flex;
+}
+
+.sbframe:not(.active) {
+  display: none;
+}
+
+/* NAV TABS */
+
+.nav-tabs-custom > .nav-tabs {
+  margin: 0;
+  border-bottom: 1px solid #d7d7d7;
+  color: #666;
+  font-size: 14px;
+  font-weight: 300;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+}
+.nav-tabs-custom > .nav-tabs > li {
+  border-top: 3px solid transparent;
+  margin-bottom: -1px;
+  margin-right: 5px;
+}
+.nav-tabs-custom > .nav-tabs > li > a,
+.nav-tabs-custom > .nav-tabs > li > a:active {
+  color: #666;
+  font-weight: 300;
+  font-size: 14px;
+  border-radius: 0;
+  padding: 3px 10px 5px;
+  text-transform: none;
+}
+
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a {
+  border-bottom-color: transparent;
+}
+
+.nav-tabs-custom > .nav-tabs > li > a.text-muted {
+  color: #999;
+}
+.nav-tabs-custom > .nav-tabs > li > a,
+.nav-tabs-custom > .nav-tabs > li > a:hover {
+  background: transparent;
+  margin: 0;
+}
+.nav-tabs-custom > .nav-tabs > li > a:hover {
+  color: #999;
+}
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a:hover,
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a:focus,
+.nav-tabs-custom > .nav-tabs > li:not(.active) > a:active {
+  border-color: transparent;
+}
+.nav-tabs-custom > .nav-tabs > li.active {
+  border-top-color: #3c8dbc;
+}
+.nav-tabs-custom > .nav-tabs > li.active > a,
+.nav-tabs-custom > .nav-tabs > li.active:hover > a {
+  background-color: #fff;
+  color: #666;
+}
+.nav-tabs-custom > .nav-tabs > li.active > a {
+  border-top-color: transparent;
+  border-left-color: #d7d7d7;
+  border-right-color: #d7d7d7;
+}
+.nav-tabs-custom > .nav-tabs > li:first-of-type {
+  margin-left: 0;
+}
+.nav-tabs-custom > .nav-tabs > li:first-of-type.active > a {
+  border-left-color: transparent;
+}
+.nav-tabs-custom > .nav-tabs.pull-right {
+  float: none !important;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li {
+  float: right;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type {
+  margin-right: 0;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type > a {
+  border-left-width: 1px;
+}
+.nav-tabs-custom > .nav-tabs.pull-right > li:first-of-type.active > a {
+  border-left-color: #d7d7d7;
+  border-right-color: transparent;
+}
+.nav-tabs-custom > .nav-tabs > li.header {
+  line-height: 35px;
+  padding: 0 10px;
+  font-size: 20px;
+  color: #666;
+}
+.nav-tabs-custom > .nav-tabs > li.header > .fa,
+.nav-tabs-custom > .nav-tabs > li.header > .glyphicon,
+.nav-tabs-custom > .nav-tabs > li.header > .ion {
+  margin-right: 5px;
+}
+.nav-tabs-custom > .tab-content {
+  background: #fff;
+  padding: 0;
+  border-bottom-right-radius: 3px;
+  border-bottom-left-radius: 3px;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.nav-tabs-custom > .tab-content > .chart-wrapper {
+  background: #fff;
+  border: none;
+  margin: 0;
+}
+
+
+.nav-tabs-custom > .tab-content > .active {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.nav-tabs-custom .dropdown.open > a:active,
+.nav-tabs-custom .dropdown.open > a:focus {
+  background: transparent;
+  color: #999;
+}
+
+
+@media (max-width: 767px) {
+  .value-box {
+    text-align: center;
+    margin-right: 8px;
+  }
+  .value-box .icon {
+    display: none;
+  }
+}
+
+/* Fixed position sidebar */
+
+.section.sidebar {
+  position: fixed;
+  top: 51px; /* overridden by theme */
+  left: 0;
+  bottom: 0;
+  border-right: 1px solid #e2e2e2;
+  background-color: white; /* overridden by theme */
+  padding-left: 10px;
+  padding-right: 10px;
+  visibility: hidden;
+  overflow: auto;
+}
+
+.section.sidebar form p:first-child {
+  margin-top: 10px;
+}
+
+/* Embedded source code */
+
+#flexdashboard-source-code {
+  display: none;
+}
+
+.featherlight-content #flexdashboard-source-code {
+  display: inline-block;
+}
+
+.featherlight-content {
+  width: 80%;
+  max-width: 800px;
+  padding: 0 !important;
+  border-bottom: none !important;
+}
+
+.featherlight:last-of-type {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.featherlight-inner {
+  width: 100%;
+}
+
+.featherlight-content pre {
+  margin: 0;
+  border: 0;
+  background: #fff;
+  font-size: 12px;
+}
+
+.unselectable {
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+#flexdashboard-source-code code {
+  -ms-user-select: text;
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: text;
+  -o-user-select: text;
+  user-select: text;
+}
+
+/* DataTables Tweaks */
+
+.dataTables_filter input[type="search"] {
+  -webkit-appearance: searchfield;
+  outline: none;
+}
+
+.dataTables_wrapper.no-footer
+.dataTables_info {
+  padding-top: 0;
+}
+
+
+table.dataTable thead th {
+  border-bottom: 1px solid #d7d7d7;
+}
+
+.dataTables_wrapper.no-footer .dataTables_scrollBody {
+  border-bottom: 1px solid #d7d7d7;
+}
+
+/* Mobile phone only CSS */
+
+.desktop-layout div.section.mobile {
+  display: none;
+}
+
+.mobile-layout div.section.no-mobile {
+  display: none;
+}
+
+.mobile-figure {
+  display: none;
+}
+
+
+
+body {
+  padding-top: 60px;
+}
+
+.section.sidebar {
+  top: 51px;
+  background-color: rgba(39, 128, 227, 0.1);
+}
+
+.value-box {
+  color: #f9f9f9;
+}
+
+.bg-primary {
+  background-color: rgba(39, 128, 227, 0.7);
+}
+
+.storyboard-nav .sbframelist ul li.active {
+  background-color: rgba(39, 128, 227, 0.7);
+}
+
+.nav-tabs-custom > .nav-tabs > li.active {
+  border-top-color: rgba(39, 128, 227, 0.7);
+}
+
+.bg-info {
+  background-color: rgba(153, 84, 187, 0.7);
+}
+
+.bg-warning {
+  background-color: rgba(255, 117, 24, 0.7);
+}
+
+.bg-danger {
+  background-color: rgba(255, 0, 57, 0.7);
+}
+
+.bg-success {
+  background-color: rgba(63, 182, 24, 0.7);
+}
+
+.chart-title {
+  font-weight: 500;
+}
+
+.nav-tabs-custom > .nav-tabs > li > a,
+.nav-tabs-custom > .nav-tabs > li > a:active {
+  font-weight: 500;
+}
+
+@media only screen and (min-width: 768px) {
+html, body {
+  height: 100%;
+}
+
+#dashboard-container {
+  height: 100%;
+}
+}
+</style>
+
+
+
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+<div class="container-fluid">
+<div class="navbar-header">
+
+<button id="navbar-button" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+<span class="icon-bar"></span>
+</button>
+
+<span class="navbar-logo pull-left">
+  
+</span>
+<span class="navbar-brand">
+  Billboard Data Analysis
+  <span class="navbar-author">
+        </span>
+</span>
+
+</div>
+<div id="navbar" class="navbar-collapse collapse">
+<ul class="nav navbar-nav navbar-left">
+</ul>
+<ul class="nav navbar-nav navbar-right">
+</ul>
+</div><!--/.nav-collapse-->
+</div><!--/.container-->
+</div><!--/.navbar-->
+
+<img class="mobile-figure" data-mobile-figure-id=fig1 src="index_files/figure-html/top-25-h100-1.mb.png" />
+<img class="mobile-figure" data-mobile-figure-id=fig2 src="index_files/figure-html/top-25-albums-1.mb.png" />
+<img class="mobile-figure" data-mobile-figure-id=fig3 src="index_files/figure-html/top-25-streams-1.mb.png" />
+<img class="mobile-figure" data-mobile-figure-id=fig4 src="index_files/figure-html/top-25-radio-1.mb.png" />
+<img class="mobile-figure" data-mobile-figure-id=fig5 src="index_files/figure-html/top-25-digital-sales-1.mb.png" />
+<img class="mobile-figure" data-mobile-figure-id=fig6 src="index_files/figure-html/ggplot-top-10-artists-h100-annual-1.mb.png" />
+<img class="mobile-figure" data-mobile-figure-id=fig7 src="index_files/figure-html/ggplot-top-10-artists-albums-annual-1.mb.png" />
+<img class="mobile-figure" data-mobile-figure-id=fig8 src="index_files/figure-html/ggplot-top-10-artists-h100-cumulative-1.mb.png" />
+<img class="mobile-figure" data-mobile-figure-id=fig9 src="index_files/figure-html/ggplot-top-10-artists-albums-cumulative-1.mb.png" />
+<img class="mobile-figure" data-mobile-figure-id=fig10 src="index_files/figure-html/h100-fitted-ggplot-1.mb.png" />
+<script type="text/javascript">
+
+
+var FlexDashboard = (function () {
+
+  // initialize options
+  var _options = {};
+
+  var FlexDashboard = function() {
+
+    // default options
+    _options = $.extend(_options, {
+      theme: "cosmo",
+      fillPage: false,
+      orientation: 'columns',
+      storyboard: false,
+      defaultFigWidth: 576,
+      defaultFigHeight: 461,
+      defaultFigWidthMobile: 360,
+      defaultFigHeightMobile: 461,
+      isMobile: false,
+      isPortrait: false,
+      resize_reload: true
+    });
+  };
+
+  function init(options) {
+
+    // extend default options
+    $.extend(true, _options, options);
+
+    // add ids to sections that don't have them (pandoc won't assign ids
+    // to e.g. sections with titles consisting of only chinese characters)
+    var nextId = 1;
+    $('.level1:not([id]),.level2:not([id]),.level3:not([id])').each(function() {
+      $(this).attr('id', 'dashboard-' + nextId++);
+    });
+
+    // find navbar items
+    var navbarItems = $('#flexdashboard-navbar');
+    if (navbarItems.length)
+      navbarItems = JSON.parse(navbarItems.html());
+    addNavbarItems(navbarItems);
+
+    // find the main dashboard container
+    var dashboardContainer = $('#dashboard-container');
+
+    // resolve mobile classes
+    resolveMobileClasses(dashboardContainer);
+
+    // one time global initialization for components
+    componentsInit(dashboardContainer);
+
+    // look for a global sidebar
+    var globalSidebar = dashboardContainer.find(".section.level1.sidebar");
+    if (globalSidebar.length > 0) {
+
+      // global layout for fullscreen displays
+      if (!isMobilePhone()) {
+
+         // hoist it up to the top level
+         globalSidebar.insertBefore(dashboardContainer);
+
+         // lay it out (set width/positions)
+         layoutSidebar(globalSidebar, dashboardContainer);
+
+      // tuck sidebar into first page for mobile phones
+      } else {
+
+        // convert it into a level3 section
+        globalSidebar.removeClass('sidebar');
+        globalSidebar.removeClass('level1');
+        globalSidebar.addClass('level3');
+        var h1 = globalSidebar.children('h1');
+        var h3 = $('<h3></h3>');
+        h3.append(h1.contents());
+        h3.insertBefore(h1);
+        h1.detach();
+
+        // move it into the first page
+        var page = dashboardContainer.find('.section.level1').first();
+        if (page.length > 0)
+          page.prepend(globalSidebar);
+      }
+    }
+
+    // look for pages to layout
+    var pages = $('div.section.level1');
+    if (pages.length > 0) {
+
+        // find the navbar and collapse on clicked
+        var navbar = $('#navbar');
+        navbar.on("click", "a[data-toggle!=dropdown]", null, function () {
+           navbar.collapse('hide');
+        });
+
+        // envelop the dashboard container in a tab content div
+        dashboardContainer.wrapInner('<div class="tab-content"></div>');
+
+        pages.each(function(index) {
+
+          // lay it out
+          layoutDashboardPage($(this));
+
+          // add it to the navbar
+          addToNavbar($(this), index === 0);
+
+        });
+
+    } else {
+
+      // remove the navbar and navbar button if we don't
+      // have any navbuttons
+      if (navbarItems.length === 0) {
+        $('#navbar').remove();
+        $('#navbar-button').remove();
+      }
+
+      // add the storyboard class if requested
+      if (_options.storyboard)
+        dashboardContainer.addClass('storyboard');
+
+      // layout the entire page
+      layoutDashboardPage(dashboardContainer);
+    }
+
+    // if we are in shiny we need to trigger a window resize event to
+    // force correct layout of shiny-bound-output elements
+    if (isShinyDoc())
+      $(window).trigger('resize');
+
+    // make main components visible
+    $('.section.sidebar').css('visibility', 'visible');
+    dashboardContainer.css('visibility', 'visible');
+
+    // handle location hash
+    handleLocationHash();
+
+    // intialize prism highlighting
+    initPrismHighlighting();
+
+    // record mobile and orientation state then register a handler
+    // to refresh if resize_reload is set to true and it changes
+    _options.isMobile = isMobilePhone();
+    _options.isPortrait = isPortrait();
+    if (_options.resize_reload) {
+      $(window).on('resize', function() {
+        if (_options.isMobile !== isMobilePhone() ||
+            _options.isPortrait !== isPortrait()) {
+          window.location.reload();
+        }
+      });
+    } else {
+      // if in desktop mode and resizing to mobile, make sure the heights are 100%
+      // This enforces what `fillpage.css` does for "wider" pages.
+      // Since we are not reloading once the page becomes small, we need to force the height to 100%
+      // This is a new situation introduced when `_options.resize_reload` is `false`
+      if (! _options.isMobile) {
+        // only add if `fillpage.css` was added in the first place
+        if (_options.fillPage) {
+          // fillpage.css
+          $("html,body,#dashboard").css("height", "100%");
+        }
+      }
+    }
+    // trigger layoutcomplete event
+    dashboardContainer.trigger('flexdashboard:layoutcomplete');
+  }
+
+  function resolveMobileClasses(dashboardContainer) {
+     // add top level layout class
+    dashboardContainer.addClass(isMobilePhone() ? 'mobile-layout' :
+                                                  'desktop-layout');
+
+    // look for .mobile sections and add .no-mobile to their peers
+    var mobileSections = $('.section.mobile');
+    mobileSections.each(function() {
+       var id = $(this).attr('id');
+       var nomobileId = id.replace(/-\d+$/, '');
+       $('#' + nomobileId).addClass('no-mobile');
+    });
+  }
+
+  function addNavbarItems(navbarItems) {
+
+    var navbarLeft = $('ul.navbar-left');
+    var navbarRight = $('ul.navbar-right');
+
+    for (var i = 0; i<navbarItems.length; i++) {
+
+      // get the item
+      var item = navbarItems[i];
+
+      // determine the container
+      var container = null;
+      if (item.align === "left")
+        container = navbarLeft;
+      else
+        container = navbarRight;
+
+      // navbar menu if we have multiple items
+      if (item.items) {
+        var menu = navbarMenu(null, item.icon, item.title, container);
+        for (var j = 0; j<item.items.length; j++) {
+          var subItem = item.items[j];
+          var li = $('<li></li>');
+          li.append(navbarLink(subItem.icon, subItem.title, subItem.href, subItem.target));
+          menu.append(li);
+        }
+      } else {
+        var li = $('<li></li>');
+        li.append(navbarLink(item.icon, item.title, item.href, item.target));
+        container.append(li);
+      }
+    }
+  }
+
+  // create or get a reference to an existing dropdown menu
+  function navbarMenu(id, icon, title, container) {
+    var existingMenu = [];
+    if (id)
+      existingMenu = container.children('#' + id);
+    if (existingMenu.length > 0) {
+      return existingMenu.children('ul');
+    } else {
+      var li = $('<li></li>');
+      if (id)
+        li.attr('id', id);
+      li.addClass('dropdown');
+      // auto add "Share" title on mobile if necessary
+      if (!title && icon && (icon === "fa-share-alt") && isMobilePhone())
+        title = "Share";
+      if (title) {
+        title = title + ' <span class="caret"></span>';
+      }
+      var a = navbarLink(icon, title, "#");
+      a.addClass('dropdown-toggle');
+      a.attr('data-toggle', 'dropdown');
+      a.attr('role', 'button');
+      a.attr('aria-expanded', 'false');
+      li.append(a);
+      var ul = $('<ul class="dropdown-menu"></ul>');
+      ul.attr('role', 'menu');
+      li.append(ul);
+      container.append(li);
+      return ul;
+    }
+  }
+
+  function addToNavbar(page, active) {
+
+    // capture the id and data-icon attribute (if any)
+    var id = page.attr('id');
+    var icon = page.attr('data-icon');
+    var navmenu = page.attr('data-navmenu');
+
+    // get hidden state (transfer this to navbar)
+    var hidden = page.hasClass('hidden');
+    page.removeClass('hidden');
+
+    // sanitize the id for use with bootstrap tabs
+    id = id.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
+    page.attr('id', id);
+
+    // get the wrapper
+    var wrapper = page.closest('.dashboard-page-wrapper');
+
+    // move the id to the wrapper
+    page.removeAttr('id');
+    wrapper.attr('id', id);
+
+    // add the tab-pane class to the wrapper
+    wrapper.addClass('tab-pane');
+    if (active)
+      wrapper.addClass('active');
+
+    // get a reference to the h1, discover its inner contens, then detach it
+    var h1 = wrapper.find('h1').first();
+    var title = h1.contents();
+    h1.detach();
+
+    // create a navbar item
+    var li = $('<li></li>');
+    var a = navbarLink(icon, title, '#' + id);
+    a.attr('data-toggle', 'tab');
+    li.append(a);
+
+    // add it to the navbar (or navbar menu if specified)
+    var container = $('ul.navbar-left');
+    if (navmenu) {
+      var menuId = navmenu.replace(/\s+/g, '');
+      var menu = navbarMenu(menuId, null, navmenu, container);
+      menu.append(li);
+    } else {
+      container.append(li);
+    }
+
+    // hide it if requested
+    if (hidden)
+      li.addClass('hidden');
+  }
+
+  function navbarLink(icon, title, href, target) {
+
+    var a = $('<a></a>');
+    if (icon) {
+
+      // get the name of the icon set and icon
+      var dashPos = icon.indexOf("-");
+      var iconSet = null;
+      var iconSplit = icon.split(" ");
+      if (iconSplit.length > 1) {
+        iconSet = iconSplit[0];
+        icon = iconSplit.slice(1).join(" ");
+      } else {
+        iconSet = icon.substring(0, dashPos);
+      }
+      var iconName = icon.substring(dashPos + 1);
+
+      // create the icon
+      var iconElement = $('<span class="' + iconSet + ' ' + icon + '"></span>');
+      if (title)
+        iconElement.css('margin-right', '7px');
+      a.append(iconElement);
+      // if href is null see if we can auto-generate based on icon (e.g. social)
+      if (!href)
+        maybeGenerateLinkFromIcon(iconName, a);
+    }
+    if (title)
+      a.append(title);
+
+    // add the href.
+    if (href) {
+      if (href === "source_embed") {
+        a.attr('href', '#');
+        a.attr('data-featherlight', "#flexdashboard-source-code");
+        a.featherlight({
+            beforeOpen: function(event){
+              $('body').addClass('unselectable');
+            },
+            afterClose: function(event){
+              $('body').removeClass('unselectable');
+            }
+        });
+      } else {
+        a.attr('href', href);
+      }
+    }
+
+    // add the arget
+    if (target)
+      a.attr('target', target);
+
+    return a;
+  }
+
+  // auto generate a link from an icon name (e.g. twitter) when possible
+  function maybeGenerateLinkFromIcon(iconName, a) {
+
+     var serviceLinks = {
+      "twitter": "https://twitter.com/share?text=" + encodeURIComponent(document.title) + "&url="+encodeURIComponent(location.href),
+      "facebook": "https://www.facebook.com/sharer/sharer.php?s=100&p[url]="+encodeURIComponent(location.href),
+      "google-plus": "https://plus.google.com/share?url="+encodeURIComponent(location.href),
+      "linkedin": "https://www.linkedin.com/shareArticle?mini=true&url="+encodeURIComponent(location.href) + "&title=" + encodeURIComponent(document.title),
+      "pinterest": "https://pinterest.com/pin/create/link/?url="+encodeURIComponent(location.href) + "&description=" + encodeURIComponent(document.title)
+    };
+
+    var makeSocialLink = function(a, href) {
+      a.attr('href', '#');
+      a.on('click', function(e) {
+        e.preventDefault();
+        window.open(href);
+      });
+    };
+
+    $.each(serviceLinks, function(key, value) {
+      if (iconName.indexOf(key) !== -1)
+        makeSocialLink(a, value);
+    });
+  }
+
+  // layout a dashboard page
+  function layoutDashboardPage(page) {
+
+    // use a page wrapper so that free form content above the
+    // dashboard appears at the top rather than the side (as it
+    // would without the wrapper in a column orientation)
+    var wrapper = $('<div class="dashboard-page-wrapper"></div>');
+    page.wrap(wrapper);
+
+    // if there are no level2 or level3 headers synthesize a level3
+    // header to contain the (e.g. frame it, scroll container, etc.)
+    var headers = page.find('h2,h3');
+    if (headers.length === 0)
+      page.wrapInner('<div class="section level3"></div>');
+
+    // hoist up any content before level 2 or level 3 headers
+    var children = page.children();
+    children.each(function(index) {
+      if ($(this).hasClass('level2') || $(this).hasClass('level3'))
+        return false;
+      $(this).insertBefore(page);
+    });
+
+    // determine orientation and fillPage behavior for distinct media
+    var orientation, fillPage, storyboard;
+
+    // media: mobile phone
+    if (isMobilePhone()) {
+
+      // if there is a sidebar we need to ensure it's content
+      // is properly framed as an h3
+      var sidebar = page.find('.section.sidebar');
+      sidebar.removeClass('sidebar');
+      sidebar.wrapInner('<div class="section level3"></div>');
+      var h2 = sidebar.find('h2');
+      var h3 = $('<h3></h3>');
+      h3.append(h2.contents());
+      h3.insertBefore(h2);
+      h2.detach();
+
+      // wipeout h2 elements then enclose them in a single h2
+      var level2 = page.find('div.section.level2');
+      level2.each(function() {
+        level2.children('h2').remove();
+        level2.children().unwrap();
+      });
+      page.wrapInner('<div class="section level2"></div>');
+
+      // substitute mobile images
+      if (isPortrait()) {
+        var mobileFigures = $('img.mobile-figure');
+        mobileFigures.each(function() {
+          // get the src (might be base64 encoded)
+          var src = $(this).attr('src');
+
+          // find it's peer
+          var id = $(this).attr('data-mobile-figure-id');
+          var img = $('img[data-figure-id=' + id + "]");
+          img.attr('src', src)
+             .attr('width', _options.defaultFigWidthMobile)
+             .attr('height', _options.defaultFigHeightMobile);
+        });
+      }
+
+      // hoist storyboard commentary into it's own section
+      if (page.hasClass('storyboard')) {
+        var commentaryHR = page.find('div.section.level3 hr');
+        commentaryHR.each(function() {
+          var commentary = $(this).nextAll().detach();
+          var commentarySection = $('<div class="section level3"></div>');
+          commentarySection.append(commentary);
+          commentarySection.insertAfter($(this).closest('div.section.level3'));
+          $(this).remove();
+        });
+      }
+
+      // force a non full screen layout by columns
+      orientation = _options.orientation = 'columns';
+      fillPage = _options.fillPage = false;
+      storyboard = _options.storyboard = false;
+
+    // media: desktop
+    } else {
+
+      // determine orientation
+      orientation = page.attr('data-orientation');
+      if (orientation !== 'rows' && orientation != 'columns')
+        orientation = _options.orientation;
+
+      // determine storyboard mode
+      storyboard = page.hasClass('storyboard');
+
+      // fillPage based on options (force for storyboard)
+      fillPage = _options.fillPage || storyboard;
+
+      // handle sidebar
+      var sidebar = page.find('.section.level2.sidebar');
+      if (sidebar.length > 0)
+        layoutSidebar(sidebar, page);
+    }
+
+    // give it and it's parent divs height: 100% if we are in fillPage mode
+    if (fillPage) {
+      page.addClass('vertical-layout-fill');
+      page.css('height', '100%');
+      page.parents('div').css('height', '100%');
+    } else {
+      page.addClass('vertical-layout-scroll');
+    }
+
+    // perform the layout
+    if (storyboard)
+      layoutPageAsStoryboard(page);
+    else if (orientation === 'rows')
+      layoutPageByRows(page, fillPage);
+    else if (orientation === 'columns')
+      layoutPageByColumns(page, fillPage);
+  }
+
+  function layoutSidebar(sidebar, content) {
+
+    // get it out of the header hierarchy
+    sidebar = sidebar.first();
+    if (sidebar.hasClass('level1')) {
+      sidebar.removeClass('level1');
+      sidebar.children('h1').remove();
+    } else if (sidebar.hasClass('level2')) {
+      sidebar.removeClass('level2');
+      sidebar.children('h2').remove();
+    }
+
+    // determine width
+    var sidebarWidth = isTablet() ? 220 : 250;
+    var dataWidth = parseInt(sidebar.attr('data-width'));
+    if (dataWidth)
+      sidebarWidth = dataWidth;
+
+    // set the width and shift the page right to accomodate the sidebar
+    sidebar.css('width', sidebarWidth + 'px');
+    content.css('padding-left', sidebarWidth + 'px');
+
+    // wrap it's contents in a form
+    sidebar.wrapInner($('<form></form>'));
+  }
+
+  function layoutPageAsStoryboard(page) {
+
+    // create storyboard navigation
+    var nav = $('<div class="storyboard-nav"></div>');
+
+    // add navigation buttons
+    var prev = $('<button class="sbprev"><i class="fa fa-angle-left"></i></button>');
+    nav.append(prev);
+    var next= $('<button class="sbnext"><i class="fa fa-angle-right"></i></button>');
+    nav.append(next);
+
+    // add navigation frame
+    var frameList = $('<div class="sbframelist"></div>');
+    nav.append(frameList);
+    var ul = $('<ul></ul>');
+    frameList.append(ul);
+
+     // find all the level3 sections (those are the storyboard frames)
+    var frames = page.find('div.section.level3');
+    frames.each(function() {
+
+      // mark it
+      $(this).addClass('sbframe');
+
+      // divide it into chart content and (optional) commentary
+      $(this).addClass('dashboard-column-orientation');
+
+      // stuff the chart into it's own div w/ flex
+      $(this).wrapInner('<div class="sbframe-component"></div>');
+      setFlex($(this), 1);
+      var frame = $(this).children('.sbframe-component');
+
+      // extract the title from the h3
+      var li = $('<li></li>');
+      var h3 = frame.children('h3');
+      li.append(h3.contents());
+      h3.detach();
+      ul.append(li);
+
+      // extract commentary
+      var hr = frame.children('hr');
+      if (hr.length) {
+        var commentary = hr.nextAll().detach();
+        hr.remove();
+        var commentaryFrame = $('<div class="sbframe-commentary"></div>');
+        commentaryFrame.addClass('flowing-content-shim');
+        commentaryFrame.addClass('flowing-content-container');
+        commentaryFrame.append(commentary);
+        $(this).append(commentaryFrame);
+
+        // look for a data-commentary-width attribute
+        var commentaryWidth = $(this).attr('data-commentary-width');
+        if (commentaryWidth)
+          commentaryFrame.css('width', commentaryWidth + 'px');
+      }
+
+      // layout the chart (force flex)
+      var result = layoutChart(frame, true);
+
+      // ice the notes if there are none
+      if (!result.notes)
+        frame.find('.chart-notes').remove();
+
+      // set flex on chart
+      setFlex(frame, 1);
+    });
+
+    // create a div to hold all the frames
+    var frameContent = $('<div class="sbframe-content"></div>');
+    frameContent.addClass('dashboard-row-orientation');
+    frameContent.append(frames.detach());
+
+    // row orientation to stack nav and frame content
+    page.addClass('dashboard-row-orientation');
+    page.append(nav);
+    page.append(frameContent);
+    setFlex(frameContent, 1);
+
+    // initialize sly
+    var sly = new Sly(frameList, {
+    		horizontal: true,
+    		itemNav: 'basic',
+    		smart: true,
+    		activateOn: 'click',
+    		startAt: 0,
+    		scrollBy: 1,
+    		activatePageOn: 'click',
+    		speed: 200,
+    		moveBy: 600,
+    		dragHandle: true,
+    		dynamicHandle: true,
+    		clickBar: true,
+    		keyboardNavBy: 'items',
+    		next: next,
+    		prev: prev
+    	}).init();
+
+    // make first frame active
+    frames.removeClass('active');
+    frames.first().addClass('active');
+
+    // subscribe to frame changed events
+    sly.on('active', function (eventName, itemIndex) {
+      frames.removeClass('active');
+      frames.eq(itemIndex).addClass('active')
+                          .trigger('shown');
+    });
+  }
+
+  function layoutPageByRows(page, fillPage) {
+
+    // row orientation
+    page.addClass('dashboard-row-orientation');
+
+    // find all the level2 sections (those are the rows)
+    var rows = page.find('div.section.level2');
+
+    // if there are no level2 sections then treat the
+    // entire page as if it's a level 2 section
+    if (rows.length === 0) {
+      page.wrapInner('<div class="section level2"></div>');
+      rows = page.find('div.section.level2');
+    }
+
+    rows.each(function () {
+
+      // flags
+      var haveNotes = false;
+      var haveFlexHeight = true;
+
+      // remove the h2
+      $(this).children('h2').remove();
+
+      // check for a tabset
+      var isTabset = $(this).hasClass('tabset');
+      if (isTabset)
+        layoutTabset($(this));
+
+      // give it row layout semantics if it's not a tabset
+      if (!isTabset)
+        $(this).addClass('dashboard-row');
+
+      // find all of the level 3 subheads
+      var columns = $(this).find('div.section.level3');
+
+      // determine figureSizes sizes
+      var figureSizes = chartFigureSizes(columns);
+
+      // fixup the columns
+      columns.each(function(index) {
+
+        // layout the chart (force flex if we are in a tabset)
+        var result = layoutChart($(this), isTabset);
+
+        // update flexHeight state
+        if (!result.flex)
+          haveFlexHeight = false;
+
+        // update state
+        if (result.notes)
+          haveNotes = true;
+
+        // set the column flex based on the figure width
+        // (value boxes will just get the default figure width)
+        var chartWidth = figureSizes[index].width;
+        setFlex($(this), chartWidth + ' ' + chartWidth + ' 0px');
+
+      });
+
+      // remove empty chart note divs
+      if (isTabset)
+        $(this).find('.chart-notes').filter(function() {
+            return $(this).html() === "&nbsp;";
+        }).remove();
+      if (!haveNotes)
+        $(this).find('.chart-notes').remove();
+
+       // make it a flexbox row
+      if (haveFlexHeight)
+        $(this).addClass('dashboard-row-flex');
+
+      // now we can set the height on all the wrappers (based on maximum
+      // figure height + room for title and notes, or data-height on the
+      // container if specified). However, don't do this if there is
+      // no flex on any of the constituent columns
+      var flexHeight = null;
+      var dataHeight = parseInt($(this).attr('data-height'));
+      if (dataHeight)
+        flexHeight = adjustedHeight(dataHeight, columns.first());
+      else if (haveFlexHeight)
+        flexHeight = maxChartHeight(figureSizes, columns);
+      if (flexHeight) {
+        if (fillPage)
+          setFlex($(this), flexHeight + ' ' + flexHeight + ' 0px');
+        else {
+          $(this).css('height', flexHeight + 'px');
+          setFlex($(this), '0 0 ' + flexHeight + 'px');
+        }
+      }
+
+    });
+  }
+
+  function layoutPageByColumns(page, fillPage) {
+
+    // column orientation
+    page.addClass('dashboard-column-orientation');
+
+    // find all the level2 sections (those are the columns)
+    var columns = page.find('div.section.level2');
+
+    // if there are no level2 sections then treat the
+    // entire page as if it's a level 2 section
+    if (columns.length === 0) {
+      page.wrapInner('<div class="section level2"></div>');
+      columns = page.find('div.section.level2');
+    }
+
+    // layout each column
+    columns.each(function (index) {
+
+      // remove the h2
+      $(this).children('h2').remove();
+
+      // make it a flexbox column
+      $(this).addClass('dashboard-column');
+
+      // check for a tabset
+      var isTabset = $(this).hasClass('tabset');
+      if (isTabset)
+        layoutTabset($(this));
+
+      // find all the h3 elements
+      var rows = $(this).find('div.section.level3');
+
+      // get the figure sizes for the rows
+      var figureSizes = chartFigureSizes(rows);
+
+      // column flex is the max row width (or data-width if specified)
+      var flexWidth;
+      var dataWidth = parseInt($(this).attr('data-width'));
+      if (dataWidth)
+        flexWidth = dataWidth;
+      else
+        flexWidth = maxChartWidth(figureSizes);
+      setFlex($(this), flexWidth + ' ' + flexWidth + ' 0px');
+
+      // layout each chart
+      rows.each(function(index) {
+
+        // perform the layout
+        var result = layoutChart($(this), false);
+
+        // ice the notes if there are none
+        if (!result.notes)
+          $(this).find('.chart-notes').remove();
+
+        // set flex height based on figHeight, then adjust
+        if (result.flex) {
+          var chartHeight = figureSizes[index].height;
+          chartHeight = adjustedHeight(chartHeight, $(this));
+          if (fillPage)
+            setFlex($(this), chartHeight + ' ' + chartHeight + ' 0px');
+          else {
+            $(this).css('height', chartHeight + 'px');
+            setFlex($(this), chartHeight + ' ' + chartHeight + ' ' + chartHeight + 'px');
+          }
+        }
+      });
+    });
+  }
+
+  function chartFigureSizes(charts) {
+
+    // sizes
+    var figureSizes = new Array(charts.length);
+
+    // check each chart
+    charts.each(function(index) {
+
+      // start with default
+      figureSizes[index] = {
+        width: _options.defaultFigWidth,
+        height: _options.defaultFigHeight
+      };
+
+      // look for data-height or data-width then knit options
+      var dataWidth = parseInt($(this).attr('data-width'));
+      var dataHeight = parseInt($(this).attr('data-height'));
+      var knitrOptions = $(this).find('.knitr-options:first');
+      var knitrWidth, knitrHeight;
+      if (knitrOptions) {
+        knitrWidth = parseInt(knitrOptions.attr('data-fig-width'));
+        knitrHeight =  parseInt(knitrOptions.attr('data-fig-height'));
+      }
+
+      // width
+      if (dataWidth)
+        figureSizes[index].width = dataWidth;
+      else if (knitrWidth)
+        figureSizes[index].width = knitrWidth;
+
+      // height
+      if (dataHeight)
+        figureSizes[index].height = dataHeight;
+      else if (knitrHeight)
+        figureSizes[index].height = knitrHeight;
+    });
+
+    // return sizes
+    return figureSizes;
+  }
+
+  function maxChartHeight(figureSizes, charts) {
+
+    // first compute the maximum height
+    var maxHeight = _options.defaultFigHeight;
+    for (var i = 0; i<figureSizes.length; i++)
+      if (figureSizes[i].height > maxHeight)
+        maxHeight = figureSizes[i].height;
+
+    // now add offests for chart title and chart notes
+    if (charts.length)
+      maxHeight = adjustedHeight(maxHeight, charts.first());
+
+    return maxHeight;
+  }
+
+  function adjustedHeight(height, chart) {
+    if (chart.length > 0) {
+      var chartTitle = chart.find('.chart-title');
+      if (chartTitle.length)
+        height += chartTitle.first().outerHeight();
+      var chartNotes = chart.find('.chart-notes');
+      if (chartNotes.length)
+        height += chartNotes.first().outerHeight();
+    }
+    return height;
+  }
+
+  function maxChartWidth(figureSizes) {
+    var maxWidth = _options.defaultFigWidth;
+    for (var i = 0; i<figureSizes.length; i++)
+      if (figureSizes[i].width > maxWidth)
+        maxWidth = figureSizes[i].width;
+    return maxWidth;
+  }
+
+  // layout a chart
+  function layoutChart(chart, forceFlex) {
+
+    // state to return
+    var result = {
+      notes: false,
+      flex: false
+    };
+
+    // extract the title
+    var title = extractTitle(chart);
+
+    // find components that apply to this container
+    var components = componentsFind(chart);
+
+    // if it's a custom component then call it and return
+    var customComponents = componentsCustom(components);
+    if (customComponents.length) {
+      componentsLayout(customComponents, title, chart);
+      result.notes = false;
+      result.flex = forceFlex || componentsFlex(customComponents);
+      return result;
+    }
+
+    // put all the content in a chart wrapper div
+    chart.addClass('chart-wrapper');
+    chart.wrapInner('<div class="chart-stage"></div>');
+    var chartContent = chart.children('.chart-stage');
+
+    // flex the content if appropriate
+    result.flex = forceFlex || componentsFlex(components);
+    if (result.flex) {
+      // add flex classes
+      chart.addClass('chart-wrapper-flex');
+      chartContent.addClass('chart-stage-flex');
+
+      // additional shim to break out of flexbox sizing
+      chartContent.wrapInner('<div class="chart-shim"></div>');
+      chartContent = chartContent.children('.chart-shim');
+    }
+
+    // set custom data-padding attribute
+    var pad = chart.attr('data-padding');
+    if (pad) {
+      if (pad === "0")
+        chart.addClass('no-padding');
+      else {
+        pad = pad + 'px';
+        chartContent.css('left', pad)
+                    .css('top', pad)
+                    .css('right', pad)
+                    .css('bottom', pad)
+      }
+    }
+
+    // call compoents
+    componentsLayout(components, title, chartContent);
+
+    // also activate components on shiny output
+    findShinyOutput(chartContent).on('shiny:value',
+      function(event) {
+        var element = $(event.target);
+        setTimeout(function() {
+
+          // see if we opted out of flex based on our output (for shiny
+          // we can't tell what type of output we have until after the
+          // value is bound)
+          var components = componentsFind(element);
+          var flex = forceFlex || componentsFlex(components);
+          if (!flex) {
+            chart.css('height', "");
+            setFlex(chart, "");
+            chart.removeClass('chart-wrapper-flex');
+            chartContent.removeClass('chart-stage-flex');
+            chartContent.children().unwrap();
+          }
+
+          // perform layout
+          componentsLayout(components, title, element.parent());
+        }, 10);
+      });
+
+    // add the title
+    var chartTitle = $('<div class="chart-title"></div>');
+    chartTitle.append(title);
+    chart.prepend(chartTitle);
+
+    // add the notes section
+    var chartNotes = $('<div class="chart-notes"></div>');
+    chartNotes.html('&nbsp;');
+    chart.append(chartNotes);
+
+    // attempt to extract notes if we have a component
+    if (components.length)
+      result.notes = extractChartNotes(chartContent, chartNotes);
+
+    // return result
+    return result;
+  }
+
+  // build a tabset from a section div with the .tabset class
+  function layoutTabset(tabset) {
+
+    // check for fade option
+    var fade = tabset.hasClass("tabset-fade");
+    var navClass = "nav-tabs";
+
+    // determine the heading level of the tabset and tabs
+    var match = tabset.attr('class').match(/level(\d) /);
+    if (match === null)
+      return;
+    var tabsetLevel = Number(match[1]);
+    var tabLevel = tabsetLevel + 1;
+
+    // find all subheadings immediately below
+    var tabs = tabset.find("div.section.level" + tabLevel);
+    if (!tabs.length)
+      return;
+
+    // create tablist and tab-content elements
+    var tabList = $('<ul class="nav ' + navClass + '" role="tablist"></ul>');
+    $(tabs[0]).before(tabList);
+    var tabContent = $('<div class="tab-content"></div>');
+    $(tabs[0]).before(tabContent);
+
+    // build the tabset
+    tabs.each(function(i) {
+
+      // get the tab div
+      var tab = $(tabs[i]);
+
+      // get the id then sanitize it for use with bootstrap tabs
+      var id = tab.attr('id');
+
+      // sanitize the id for use with bootstrap tabs
+      id = id.replace(/[.\/?&!#<>]/g, '').replace(/\s/g, '_');
+      tab.attr('id', id);
+
+      // get the heading element within it and grab it's text
+      var heading = tab.find('h' + tabLevel + ':first');
+      var headingDom = heading.contents();
+
+      // build and append the tab list item
+      var a = $('<a role="tab" data-toggle="tab"></a>');
+      a.append(headingDom);
+      a.attr('href', '#' + id);
+      a.attr('aria-controls', id);
+      var li = $('<li role="presentation"></li>');
+      li.append(a);
+      if (i === 0)
+        li.attr('class', 'active');
+      tabList.append(li);
+
+      // set it's attributes
+      tab.attr('role', 'tabpanel');
+      tab.addClass('tab-pane');
+      tab.addClass('tabbed-pane');
+      tab.addClass('no-title');
+      if (fade)
+        tab.addClass('fade');
+      if (i === 0) {
+        tab.addClass('active');
+        if (fade)
+          tab.addClass('in');
+      }
+
+      // move it into the tab content div
+      tab.detach().appendTo(tabContent);
+    });
+
+    // add nav-tabs-custom
+    tabset.addClass('nav-tabs-custom');
+
+    // internal layout is dashboard-column with tab-content flexing
+    tabset.addClass('dashboard-column');
+    setFlex(tabContent, 1);
+  }
+
+  // one time global initialization for components
+  function componentsInit(dashboardContainer) {
+    for (var i=0; i<window.FlexDashboardComponents.length; i++) {
+      var component = window.FlexDashboardComponents[i];
+      if (component.init)
+        component.init(dashboardContainer);
+    }
+  }
+
+  // find components that apply within a container
+  function componentsFind(container) {
+
+    // look for components
+    var components = [];
+    for (var i=0; i<window.FlexDashboardComponents.length; i++) {
+      var component = window.FlexDashboardComponents[i];
+      if (component.find(container).length)
+        components.push(component);
+    }
+
+    // if there were none then use a special flowing content component
+    // that just adds a scrollbar in fillPage mode
+    if (components.length == 0) {
+      components.push({
+        find: function(container) {
+          return container;
+        },
+
+        flex: function(fillPage) {
+          return fillPage;
+        },
+
+        layout: function(title, container, element, fillPage) {
+          if (fillPage) {
+            container.addClass('flowing-content-shim');
+            container.addClass('flowing-content-container');
+          }
+        }
+      });
+    }
+
+    return components;
+  }
+
+  // if there is a custom component then pick it out
+  function componentsCustom(components) {
+    var customComponent = [];
+    for (var i=0; i<components.length; i++)
+      if (components[i].type === "custom") {
+        customComponent.push(components[i]);
+        break;
+      }
+    return customComponent;
+  }
+
+  // query all components for flex
+  function componentsFlex(components) {
+
+    // no components at all means no flex
+    if (components.length === 0)
+      return false;
+
+    // otherwise query components (assume true unless we see false)
+    var isMobile = isMobilePhone();
+    for (var i=0; i<components.length; i++)
+      if (components[i].flex && !components[i].flex(_options.fillPage))
+        return false;
+    return true;
+  }
+
+  // layout all components
+  function componentsLayout(components, title, container) {
+    var isMobile = isMobilePhone();
+    for (var i=0; i<components.length; i++) {
+      var element = components[i].find(container);
+      if (components[i].layout) {
+        // call layout (don't call other components if it returns false)
+        var result = components[i].layout(title, container, element, _options.fillPage);
+        if (result === false)
+          return;
+      }
+    }
+  }
+
+  // get a reference to the h3, discover it's inner html, and remove it
+  function extractTitle(container) {
+    var h3 = container.children('h3').first();
+    var title = '';
+    if (!container.hasClass('no-title'))
+      title = h3.contents();
+    h3.detach();
+    return title;
+  }
+
+  // extract chart notes
+  function extractChartNotes(chartContent, chartNotes) {
+    // look for a terminating blockquote or image caption
+    var blockquote = chartContent.children('blockquote:last-child');
+    var caption = chartContent.children('div.image-container')
+                              .children('p.caption');
+    if (blockquote.length) {
+      chartNotes.empty().append(blockquote.children('p:first-child').contents());
+      blockquote.remove();
+      return true;
+    } else if (caption.length) {
+      chartNotes.empty().append(caption.contents());
+      caption.remove();
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  function findShinyOutput(chartContent) {
+    return chartContent.find('.shiny-text-output, .shiny-html-output');
+  }
+
+  // safely detect rendering on a mobile phone
+  function isMobilePhone() {
+    try
+    {
+      return ! window.matchMedia("only screen and (min-width: 768px)").matches;
+    }
+    catch(e) {
+      return false;
+    }
+  }
+
+  function isFillPage() {
+    return _options.fillPage;
+  }
+
+  // detect portrait mode
+  function isPortrait() {
+    return ($(window).width() < $(window).height());
+  }
+
+  // safely detect rendering on a tablet
+  function isTablet() {
+    try
+    {
+      return window.matchMedia("only screen and (min-width: 769px) and (max-width: 992px)").matches;
+    }
+    catch(e) {
+      return false;
+    }
+  }
+
+  // test whether this is a shiny doc
+  function isShinyDoc() {
+    return (typeof(window.Shiny) !== "undefined" && !!window.Shiny.outputBindings);
+  }
+
+  // set flex using vendor specific prefixes
+  function setFlex(el, flex) {
+    el.css('-webkit-box-flex', flex)
+      .css('-webkit-flex', flex)
+      .css('-ms-flex', flex)
+      .css('flex', flex);
+  }
+
+  // support bookmarking of pages
+  function handleLocationHash() {
+
+    // restore tab/page from bookmark
+    var hash = window.decodeURIComponent(window.location.hash);
+    if (hash.length > 0)
+      $('ul.nav a[href="' + hash + '"]').tab('show');
+    FlexDashboardUtils.manageActiveNavbarMenu();
+
+    // navigate to a tab when the history changes
+    window.addEventListener("popstate", function(e) {
+      var hash = window.decodeURIComponent(window.location.hash);
+      var activeTab = $('ul.nav a[href="' + hash + '"]');
+      if (activeTab.length) {
+        activeTab.tab('show');
+      } else {
+        $('ul.nav a:first').tab('show');
+      }
+      FlexDashboardUtils.manageActiveNavbarMenu();
+    });
+
+    // add a hash to the URL when the user clicks on a tab/page
+    $('.navbar-nav a[data-toggle="tab"]').on('click', function(e) {
+      var baseUrl = FlexDashboardUtils.urlWithoutHash(window.location.href);
+      var hash = FlexDashboardUtils.urlHash($(this).attr('href'));
+      var href = baseUrl + hash;
+      FlexDashboardUtils.setLocation(href);
+    });
+
+    // handle clicks of other links that should activate pages
+    var navPages = $('ul.navbar-nav li a[data-toggle=tab]');
+    navPages.each(function() {
+      var href =  $(this).attr('href');
+      var links = $('a[href="' + href + '"][data-toggle!=tab]');
+      links.each(function() {
+        $(this).on('click', function(e) {
+          window.FlexDashboardUtils.showPage(href);
+        });
+      });
+    });
+  }
+
+  // tweak Prism highlighting
+  function initPrismHighlighting() {
+
+    if (window.Prism) {
+      Prism.languages.insertBefore('r', 'comment', {
+        'heading': [
+          {
+            // title 1
+        	  // =======
+
+        	  // title 2
+        	  // -------
+        	  pattern: /\w+.*(?:\r?\n|\r)(?:====+|----+)/,
+            alias: 'operator'
+          },
+          {
+            // ### title 3
+            pattern: /(^\s*)###[^#].+/m,
+            lookbehind: true,
+            alias: 'operator'
+          }
+        ]
+      });
+
+      // prism highlight
+      Prism.highlightAll();
+    }
+  }
+
+
+  // get theme color
+  var themeColors = {
+    bootstrap: {
+      primary: "rgba(51, 122, 183, 0.4)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    cerulean: {
+      primary: "rgb(47, 164, 231)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    journal: {
+      primary: "rgba(235, 104, 100, 0.70)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    flatly: {
+      primary: "rgba(44, 62, 80, 0.70)",
+      info: "rgba(52, 152, 219, 0.70)",
+      success: "rgba(24, 188, 156, 0.70)",
+      warning: "rgba(243, 156, 18, 0.70)",
+      danger: "rgba(231, 76, 60, 0.70)"
+    },
+    readable: {
+      primary: "rgba(69, 130, 236, 0.4)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    spacelab: {
+      primary: "rgba(68, 110, 155, 0.25)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    united: {
+      primary: "rgba(221, 72, 20, 0.30)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    cosmo: {
+      primary: "rgba(39, 128, 227, 0.7)",
+      info: "rgba(153, 84, 187, 0.7)",
+      success: "rgba(63, 182, 24, 0.7)",
+      warning: "rgba(255, 117, 24, 0.7)",
+      danger: "rgba(255, 0, 57, 0.7)"
+    },
+    lumen: {
+      primary: "rgba(21, 140, 186, 0.70)",
+      info: "rgba(117, 202, 235, 0.90)",
+      success: "rgba(40, 182, 44, 0.70)",
+      warning: "rgba(255, 133, 27, 0.70)",
+      danger: "rgba(255, 65, 54, 0.70)"
+    },
+    paper: {
+      primary: "rgba(33, 150, 243, 0.35)",
+      info: "rgb(225, 190, 231)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(255, 224, 178)",
+      danger: "rgb(249, 189, 187)"
+    },
+    sandstone: {
+      primary: "rgba(50, 93, 136, 0.3)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    simplex: {
+      primary: "rgba(217, 35, 15, 0.25)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    },
+    yeti: {
+      primary: "rgba(0, 140, 186, 0.298039)",
+      info: "rgb(217, 237, 247)",
+      success: "rgb(223, 240, 216)",
+      warning: "rgb(252, 248, 227)",
+      danger: "rgb(242, 222, 222)"
+    }
+  }
+  function themeColor(color) {
+    return themeColors[_options.theme][color];
+  }
+
+  FlexDashboard.prototype = {
+    constructor: FlexDashboard,
+    init: init,
+    isMobilePhone: isMobilePhone,
+    isFillPage: isFillPage,
+    themeColor: themeColor
+  };
+
+  return FlexDashboard;
+
+})();
+
+// utils
+window.FlexDashboardUtils = {
+  resizableImage: function(img) {
+    var src = img.attr('src');
+    var url = 'url("' + src + '")';
+    img.parent().css('background', url)
+                .css('background-size', 'contain')
+                .css('background-repeat', 'no-repeat')
+                .css('background-position', 'center')
+                .addClass('image-container');
+  },
+  setLocation: function(href) {
+    if (history && history.pushState) {
+      history.pushState(null, null, href);
+    } else {
+      window.location.replace(href);
+    }
+    setTimeout(function() {
+        window.scrollTo(0, 0);
+    }, 10);
+    this.manageActiveNavbarMenu();
+  },
+  showPage: function(href) {
+    $('ul.navbar-nav li a[href="' + href + '"]').tab('show');
+    var baseUrl = this.urlWithoutHash(window.location.href);
+    var loc = baseUrl + href;
+    this.setLocation(loc);
+  },
+  showLinkedValue: function(href) {
+    // check for a page link
+    if ($('ul.navbar-nav li a[data-toggle=tab][href="' + href + '"]').length > 0)
+      this.showPage(href);
+    else
+      window.open(href);
+  },
+  urlWithoutHash: function(url) {
+    var hashLoc = url.indexOf('#');
+    if (hashLoc != -1)
+      return url.substring(0, hashLoc);
+    else
+      return url;
+  },
+  urlHash: function(url) {
+    var hashLoc = url.indexOf('#');
+    if (hashLoc != -1)
+      return url.substring(hashLoc);
+    else
+      return "";
+  },
+  manageActiveNavbarMenu: function () {
+    // remove active from anyone currently active
+    $('.navbar ul.nav').find('li').removeClass('active');
+    // find the active tab
+    var activeTab = $('.dashboard-page-wrapper.tab-pane.active');
+    if (activeTab.length > 0) {
+      var tabId = activeTab.attr('id');
+      if (tabId)
+        $(".navbar ul.nav a[href='#" + tabId + "']").parents('li').addClass('active');
+    }
+  }
+};
+
+window.FlexDashboard = new FlexDashboard();
+
+// empty content
+window.FlexDashboardComponents.push({
+  find: function(container) {
+    if (container.find('p').length == 0)
+      return container;
+    else
+      return $();
+  }
+})
+
+// plot image
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.children('p')
+                    .children('img:only-child');
+  },
+
+  layout: function(title, container, element, fillPage) {
+    FlexDashboardUtils.resizableImage(element);
+  }
+});
+
+// plot image (figure style)
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.children('div.figure').children('img');
+  },
+
+  layout: function(title, container, element, fillPage) {
+    FlexDashboardUtils.resizableImage(element);
+  }
+});
+
+// htmlwidget
+window.FlexDashboardComponents.push({
+
+  init: function(dashboardContainer) {
+    // trigger "shown" after initial layout to force static htmlwidgets
+    // in runtime: shiny to be resized after the dom has been transformed
+    dashboardContainer.on('flexdashboard:layoutcomplete', function(event) {
+      setTimeout(function() {
+        dashboardContainer.trigger('shown');
+      }, 200);
+    });
+  },
+
+  find: function(container) {
+    return container.children('div[id^="htmlwidget-"],div.html-widget');
+  }
+});
+
+// gauge
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.children('div.html-widget.gauge');
+  },
+
+  flex: function(fillPage) {
+    return false;
+  },
+
+  layout: function(title, container, element, fillPage) {
+
+
+  }
+
+});
+
+// shiny output
+window.FlexDashboardComponents.push({
+  find: function(container) {
+    return container.children('div[class^="shiny-"]');
+  }
+});
+
+// datatables
+window.FlexDashboardComponents.push({
+  find: function(container) {
+    return container.find('.datatables');
+  },
+  flex: function(fillPage) {
+    return fillPage;
+  }
+});
+
+// bootstrap table
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    var bsTable = container.find('table.table');
+    if (bsTable.length !== 0)
+      return bsTable;
+    else
+      return container.find('tr.header').parent('thead').parent('table');
+  },
+
+  flex: function(fillPage) {
+    return fillPage;
+  },
+
+  layout: function(title, container, element, fillPage) {
+
+    // alias variables
+    var bsTable = element;
+
+    // fixup xtable generated tables with a proper thead
+    var headerRow = bsTable.find('tbody > tr:first-child > th').parent();
+    if (headerRow.length > 0) {
+      var thead = $('<thead></thead>');
+      bsTable.prepend(thead);
+      headerRow.detach().appendTo(thead);
+    }
+
+    // improve appearance
+    container.addClass('bootstrap-table');
+
+    // for fill page provide scrolling w/ sticky headers
+    if (fillPage) {
+      // force scrollbar on overflow
+      container.addClass('flowing-content-shim');
+
+      // stable table headers when scrolling
+      bsTable.stickyTableHeaders({
+        scrollableArea: container
+      });
+    }
+  }
+});
+
+// embedded shiny app
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.find('iframe.shiny-frame');
+  },
+
+  flex: function(fillPage) {
+    return fillPage;
+  },
+
+  layout: function(title, container, element, fillPage) {
+    if (fillPage) {
+      element.attr('height', '100%');
+    } else {
+      // provide default height if necessary
+      var height = element.get(0).style.height;
+      if (!height)
+        height = element.attr('height');
+      if (!height)
+        element.attr('height', 500);
+    }
+  }
+});
+
+// shiny fillRow or fillCol
+window.FlexDashboardComponents.push({
+
+  find: function(container) {
+    return container.find('.flexfill-container');
+  },
+
+  flex: function(fillPage) {
+    return fillPage;
+  },
+
+  layout: function(title, container, element, fillPage) {
+    if (fillPage)
+      element.css('height', '100%');
+    else {
+      // provide default height if necessary
+      var height = element.get(0).style.height;
+      if (height === "100%" || height === "auto" || height === "initial" ||
+          height === "inherit" || !height) {
+        element.css('height', 500);
+      }
+    }
+  }
+});
+
+// valueBox
+window.FlexDashboardComponents.push({
+
+  type: "custom",
+
+  find: function(container) {
+    if (container.find('span.value-output, .shiny-valuebox-output').length)
+      return container;
+    else
+      return $();
+  },
+
+  flex: function(fillPage) {
+    return false;
+  },
+
+  layout: function(title, container, element, fillPage) {
+
+    // alias variables
+    var chartTitle = title;
+    var valueBox = element;
+
+    // add value-box class to container
+    container.addClass('value-box');
+
+    // value paragraph
+    var value = $('<p class="value"></p>');
+
+    // if we have shiny-text-output then just move it in
+    var valueOutputSpan = [];
+    var shinyOutput = valueBox.find('.shiny-valuebox-output').detach();
+    if (shinyOutput.length) {
+      valueBox.children().remove();
+      shinyOutput.html("&mdash;");
+      value.append(shinyOutput);
+    } else {
+      // extract the value (remove leading vector index)
+      var chartValue = valueBox.text().trim();
+      chartValue = chartValue.replace("[1] ", "");
+      valueOutputSpan = valueBox.find('span.value-output').detach();
+      valueBox.children().remove();
+      value.text(chartValue);
+    }
+
+    // caption
+    var caption = $('<p class="caption"></p>');
+    caption.append(chartTitle);
+
+    // build inner div for value box and add it
+    var inner = $('<div class="inner"></div>');
+    inner.append(value);
+    inner.append(caption);
+    valueBox.append(inner);
+
+    // add icon if specified
+    var icon = $('<div class="icon"><i></i></div>');
+    valueBox.append(icon);
+    function setIcon(chartIcon) {
+      var iconLib = "";
+      var iconSplit = chartIcon.split(" ");
+      if (iconSplit.length > 1) {
+        iconLib = iconSplit[0];
+        chartIcon = iconSplit.slice(1).join(" ");
+      } else {
+        var components = chartIcon.split("-");
+        if (components.length > 1)
+          iconLib = components[0];
+      }
+      icon.children('i').attr('class', iconLib + ' ' + chartIcon);
+    }
+    var chartIcon = valueBox.attr('data-icon');
+    if (chartIcon)
+      setIcon(chartIcon);
+
+    // set color based on data-background if necessary
+    var dataBackground = valueBox.attr('data-background');
+    if (dataBackground)
+      valueBox.css('background-color', bgColor);
+    else {
+      // default to bg-primary if no other background is specified
+      if (!valueBox.hasClass('bg-primary') &&
+          !valueBox.hasClass('bg-info') &&
+          !valueBox.hasClass('bg-warning') &&
+          !valueBox.hasClass('bg-success') &&
+          !valueBox.hasClass('bg-danger')) {
+        valueBox.addClass('bg-primary');
+      }
+    }
+
+    // handle data attributes in valueOutputSpan
+    function handleValueOutput(valueOutput) {
+
+      // caption
+      var dataCaption = valueOutput.attr('data-caption');
+      if (dataCaption)
+        caption.html(dataCaption);
+
+      // icon
+      var dataIcon = valueOutput.attr('data-icon');
+      if (dataIcon)
+        setIcon(dataIcon);
+
+      // color
+      var dataColor = valueOutput.attr('data-color');
+      if (dataColor) {
+        if (dataColor.indexOf('bg-') === 0) {
+          valueBox.css('background-color', '');
+          if (!valueBox.hasClass(dataColor)) {
+             valueBox.removeClass('bg-primary bg-info bg-warning bg-danger bg-success');
+             valueBox.addClass(dataColor);
+          }
+        } else {
+          valueBox.removeClass('bg-primary bg-info bg-warning bg-danger bg-success');
+          valueBox.css('background-color', dataColor);
+        }
+      }
+
+      // url
+      var dataHref = valueOutput.attr('data-href');
+      if (dataHref) {
+        valueBox.addClass('linked-value');
+        valueBox.off('click.value-box');
+        valueBox.on('click.value-box', function(e) {
+          window.FlexDashboardUtils.showLinkedValue(dataHref);
+        });
+      }
+    }
+
+    // check for a valueOutputSpan
+    if (valueOutputSpan.length > 0) {
+      handleValueOutput(valueOutputSpan);
+    }
+
+    // if we have a shinyOutput then bind a listener to handle
+    // new valueOutputSpan values
+    shinyOutput.on('shiny:value',
+      function(event) {
+        var element = $(event.target);
+        setTimeout(function() {
+          var valueOutputSpan = element.find('span.value-output');
+          if (valueOutputSpan.length > 0)
+            handleValueOutput(valueOutputSpan);
+        }, 10);
+      }
+    );
+  }
+});
+</script>
+
+<div id="dashboard-container">
+
+<div id="background" class="section level1">
+<h1>Background</h1>
+<div id="column" class="section level2 sidebar" data-width="350">
+<h2 class="sidebar" data-width="350">Column</h2>
+<div id="r-packages-used" class="section level3">
+<h3>r packages used</h3>
+<ul>
+<li>tidyverse</li>
+<li>knitr</li>
+<li>broom</li>
+<li>kableExtra</li>
+<li>data.table</li>
+<li>rvest</li>
+<li>polite</li>
+</ul>
+</div>
+</div>
+<div id="row" class="section level2">
+<h2>Row</h2>
+<div id="project-description" class="section level4">
+<h4>Project description</h4>
+<p>In this project, I scraped music data from <a href="https://www.billboard.com/charts">Billboard Charts</a>. The Billboard Charts calculate the weekly popularity of all songs and albums released in the United States. These metrics are derived from a combination of sources, including the number of singles sales, digital downloads, and a wide array of streaming vehicles (i.e. such as youtube and Spotify). I will primarily investigate the Billboard year-end Hot 100 charts, comparing it against the Digital Sales, Streams, Radio and Album charts that Billboard have also provided. My data analysis will primarily be centred on the below questions:</p>
+<ul>
+<li>Is there a correlation between singles success and album popularity?</li>
+<li>Which artists were most dominant across the decade?</li>
+<li>Who were the up &amp; coming artists in the 2010s?</li>
+<li>How heavily weighted are digital sales, radio success and streams in the calculation of position on the hot 100 charts?</li>
+</ul>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><br />
+<br />
+<br />
+</p>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><img src="images/artists.jpg" width="45%" data-figure-id=fig1 style="display: block; margin: auto;" /></p>
+</div>
+</div>
+</div>
+<div id="scraping-the-billboard-data" class="section level1">
+<h1>Scraping the Billboard Data</h1>
+<div id="column-1" class="section level2 sidebar" data-width="500">
+<h2 class="sidebar" data-width="500">Column</h2>
+<div id="insights" class="section level3">
+<h3>Insights</h3>
+</div>
+<div id="rationale-behind-implementing-a-point-system" class="section level3">
+<h3>Rationale behind implementing a point system</h3>
+<p>When I scraped the data, I noticed there were no discernible values that told much about the positioning of certain items in terms of its rank. Therefore, I decided to implement a point system that allocated different points for each rank within the charts. For example, in the Hot 100 charts, rank no.1 would earn a total of 100 points, whilst rank no.100 would earn a total of 1 point.</p>
+</div>
+<div id="correcting-the-scale" class="section level3">
+<h3>Correcting the scale</h3>
+<p>However, all the Billboard Charts that I scraped were of different scales, which made it difficult to compare the different charts. In the tabs, you will see that I scaled all the charts in accordance with the Hot 100 chart to create a range of points between 100 to 1. For example, to scale the Billboard Streaming, Radio and Digital Sales data, I divided the points by 0.75 as it is three-quarters the scale of the Billboard Hot 100 charts.</p>
+</div>
+<div id="scraping-strategy" class="section level3">
+<h3>Scraping strategy</h3>
+<p>As I wanted to scrape through years of data, I needed to implement a scraping strategy whereby I could reduce time without having to create a tibble for every single year. After carefully analysing the Billboard web pages for each separate chart category, I realised the only element that changed within the URL was the year. I then created a function (with “year” being the argument) and used the stringr package to add the year to the URL when bowing to gain permission for scraping. I then used the Selector Gadget tool to scrape through different variables within the charts (i.e. Rank, Title, Artist &amp; Album) and created a tibble for each respective chart.</p>
+</div>
+</div>
+<div id="column-2" class="section level2 tabset tabset-fade">
+<h2 class="tabset tabset-fade">Column</h2>
+<div id="scrape---billboard-album-200" class="section level3">
+<h3>Scrape - Billboard Album 200</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>top_albums <span class="ot">&lt;-</span> <span class="cf">function</span>(year){</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  rank <span class="ot">&lt;-</span> <span class="fu">bow</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>       <span class="fu">str_c</span>(<span class="st">&quot;https://www.billboard.com/charts/year-end/&quot;</span>, year, <span class="st">&quot;/top-billboard-200-albums&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>       ) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scrape</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&quot;.ye-chart-item__rank&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    as.numeric</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  albums <span class="ot">&lt;-</span> <span class="fu">bow</span>(</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_c</span>(<span class="st">&quot;https://www.billboard.com/charts/year-end/&quot;</span>, year, <span class="st">&quot;/top-billboard-200-albums&quot;</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scrape</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&quot;.ye-chart-item__title&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  artists <span class="ot">&lt;-</span> <span class="fu">bow</span>(</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_c</span>(<span class="st">&quot;https://www.billboard.com/charts/year-end/&quot;</span>, year, <span class="st">&quot;/top-billboard-200-albums&quot;</span>)</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    ) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scrape</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&quot;.ye-chart-item__artist&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_text</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>)</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">Rank =</span> rank,</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>         <span class="at">Album =</span> albums, </span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>         <span class="at">Artist =</span> artists,</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>         <span class="at">Year =</span> year,</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>         <span class="at">Points =</span> (<span class="dv">201</span> <span class="sc">-</span> Rank)<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="scrape---billboard-streams" class="section level3">
+<h3>Scrape - Billboard Streams</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>top_streams <span class="ot">&lt;-</span> <span class="cf">function</span>(year){</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  position <span class="ot">&lt;-</span> <span class="fu">bow</span>(<span class="fu">str_c</span>(<span class="st">&quot;https://www.billboard.com/charts/year-end/&quot;</span>, year ,<span class="st">&quot;/streaming-songs&quot;</span>))<span class="sc">%&gt;%</span> </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scrape</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&quot;.ye-chart-item__rank&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    html_text <span class="sc">%&gt;%</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">as.numeric</span>()</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  titles <span class="ot">&lt;-</span> <span class="fu">bow</span>(<span class="fu">str_c</span>(<span class="st">&quot;https://www.billboard.com/charts/year-end/&quot;</span>, year ,<span class="st">&quot;/streaming-songs&quot;</span>))<span class="sc">%&gt;%</span> </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scrape</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&quot;.ye-chart-item__title&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    html_text <span class="sc">%&gt;%</span> </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  artists <span class="ot">&lt;-</span> <span class="fu">bow</span>(<span class="fu">str_c</span>(<span class="st">&quot;https://www.billboard.com/charts/year-end/&quot;</span>, year ,<span class="st">&quot;/streaming-songs&quot;</span>))<span class="sc">%&gt;%</span>  </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scrape</span>() <span class="sc">%&gt;%</span> </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">html_nodes</span>(<span class="st">&quot;.ye-chart-item__artist&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    html_text <span class="sc">%&gt;%</span> </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="fu">str_remove_all</span>(<span class="st">&quot;</span><span class="sc">\\</span><span class="st">n&quot;</span>) </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Rank =</span> position,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>       <span class="at">Title =</span> titles, </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">Artist =</span> artists,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">Year =</span> year,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">Points =</span> (<span class="dv">76</span> <span class="sc">-</span> Rank)<span class="sc">/</span><span class="fl">0.75</span>)</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+<div id="billboard-streams-data" class="section level3">
+<h3>Billboard Streams Data</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-66ec12f41887bebc4e01" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-66ec12f41887bebc4e01">{"x":{"filter":"none","vertical":false,"fillContainer":true,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252","253","254","255","256","257","258","259","260","261","262","263","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","300","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","425","426","427","428","429","430","431","432","433","434","435","436","437","438","439","440","441","442","443","444","445","446","447","448","449","450","451","452","453","454","455","456","457","458","459","460","461","462","463","464","465","466","467","468","469","470","471","472","473","474","475","476","477","478","479","480","481","482","483","484","485","486","487","488","489","490","491","492","493","494","495","496","497","498","499","500","501","502","503","504","505","506","507","508","509","510","511","512","513","514","515","516","517","518","519","520","521","522","523","524","525"],[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75],["Harlem Shake","Gangnam Style","Thrift Shop","Radioactive","We Can't Stop","Wrecking Ball","Blurred Lines","Can't Hold Us","Started From The Bottom","Sail","Get Lucky","When I Was Your Man","Roar","The Way","Mirrors","Love Me","Royals","F**kin Problems","U.O.E.N.O.","Just Give Me A Reason","Cups (Pitch Perfect's When I'm Gone)","The Fox","Wake Me Up!","Gentleman","Power Trip","Body Party","Cruise","Come &amp; Get It","Scream &amp; Shout","Bad","Stay","Holy Grail","Call Me Maybe","Hold On, We're Going Home","What Makes You Beautiful","Suit &amp; Tie","Best Song Ever","I Knew You Were Trouble.","Applause","Ho Hey","Locked Out Of Heaven","Treasure","It's Time","Heart Attack","Beauty And A Beat","23","Clarity","Red Nose","Diamonds","I Love It","22","Gas Pedal","Berzerk","Summertime Sadness","Sweet Nothing","Safe And Sound","Levitate","Girl On Fire","Bugatti","Demons","Feel This Moment","I Need Your Love","Type Of Way","Wop","Don't You Worry Child","Swimming Pools (Drank)","My Songs Know What You Did In The Dark (Light Em Up)","Love More","Poetic Justice","Counting Stars","Rich As F**k","#Beautiful","My Hitta","Bitch, Don't Kill My Vibe","All Gold Everything","Dark Horse","Fancy","Happy","All Of Me","Let It Go","All About That Bass","Problem","Talk Dirty","Rude","Timber","Turn Down For What","Anaconda","Counting Stars","Gangnam Style","Shake It Off","Wiggle","Wrecking Ball","Chandelier","Loyal","Hot Boy","Stay With Me","Royals","Habits (Stay High)","Sail","Bang Bang","Let Her Go","The Monster","Say Something","Or Nah","Pompeii","Black Widow","Break Free","Drunk In Love","Shower","Radioactive","My Hitta","Am I Wrong","Summer","Wake Me Up!","Lifestyle","Bailando","Rather Be","Story Of My Life","Maps","Roar","Rap God","23","Show Me","Demons","Team","Can't Hold Us","Na Na","Classic","Burn","Can't Remember To Forget You","Boom Clap","Animals","We Dem Boyz","Animals","This Is How We Do","No Flex Zone","Latch","Work","Let It Go","New Flame","The Man","She Looks So Perfect","2 On","Hold On, We're Going Home","Adore You","Don't Tell 'Em","Cool Kids","Hey Brother","Trumpets","Don't","Trap Queen","Uptown Funk!","Watch Me","See You Again","Thinking Out Loud","The Hills","Sugar","Earned It (Fifty Shades Of Grey)","Cheerleader","Can't Feel My Face","679","Shake It Off","Post To Be","Lean On","Blank Space","Where Are U Now","All About That Bass","Take Me To Church","Love Me Like You Do","Hotline Bling","Nasty Freestyle","What Do You Mean?","Worth It","Gangnam Style","No Type","My Way","Good For You","7/11","Hot Boy","I Don't F**k With You","Shut Up And Dance","Hello","Only","G.D.F.R.","Bad Blood","Flex (Ooh Ooh Ooh)","Lips Are Movin","Chandelier","B**** Better Have My Money","Elastic Heart","I'm Not The Only One","Stitches","Hit The Quan","Let It Go","Often","CoCo","Slow Motion","Hey Mama","Centuries","All Eyes On You","Want To Want Me","Love Me Harder","Blessings","Bang Bang","Somebody","Locked Away","Classic Man","Dear Future Husband","Jumpman","Drag Me Down","Tuesday","FourFiveSeconds","I Don't Mind","Photograph","Stay With Me","Back To Back","Fight Song","Cool For The Summer","Jealous","The Heart Wants What It Wants","Again","Energy","One Last Time","Where Ya At","You Know You Like It","Panda","Work","Sorry","One Dance","Needed Me","Love Yourself","Closer","Stressed Out","Don't Let Me Down","Hello","Work From Home","Don't","Low Life","7 Years","Me, Myself &amp; I","Hotline Bling","Heathens","This Is What You Came For","I Took A Pill In Ibiza","Cheap Thrills","What Do You Mean?","Exchange","Pillowtalk","Broccoli","Cold Water","Jumpman","The Hills","Ride","2 Phones","Too Good","Can't Stop The Feeling!","My House","Watch Me","Controlla","679","Roses","I Hate U I Love U","White Iverson","Oui","Stitches","Into You","Don't Mind","Cake By The Ocean","Let Me Love You","Trap Queen","Never Forget You","Really Really","Starboy","Uptown Funk!","Treat You Better","Sucker For Pain","Down In The DM","Tiimmy Turner","Lean On","Antidote","We Don't Talk Anymore","Dangerous Woman","Side To Side","Can't Feel My Face","Pop Style","Say It","See You Again","Here","Middle","Cut It","Same Old Love","Hands To Myself","Never Be Like You","Close","For Free","Black Beatles","Send My Love (To Your New Lover)","Money Longer","Me Too","Gold","Despacito","Shape Of You","Bad And Boujee","Humble.","That's What I Like","Congratulations","XO TOUR Llif3","Mask Off","Closer","I'm The One","iSpy","Unforgettable","Black Beatles","Bodak Yellow (Money Moves)","Location","Starboy","Wild Thoughts","Bank Account","Bounce Back","Juju On That Beat (TZ Anthem)","Tunnel Vision","24K Magic","Rolex","Body Like A Back Road","T-Shirt","Drowning","Swang","1-800-273-8255","Believer","Rockstar","Something Just Like This","Fake Love","Redbone","Say You Won't Let Go","Look What You Made Me Do","DNA.","Rake It Up","Stay","Caroline","Slippery","Issues","Mi Gente","Attention","Broccoli","Can't Stop The Feeling!","Magnolia","Sorry Not Sorry","Look At Me!","I Get The Bag","It Ain't Me","I Don't Wanna Live Forever (Fifty Shades Darker)","Young Dumb &amp; Broke","Paris","Side To Side","Strip That Down","Heathens","There's Nothing Holdin' Me Back","Bad Things","Passionfruit","Both","Slide","I Feel It Coming","Rockabye","Don't Let Me Down","Love Galore","The Race","Portland","Butterfly Effect","Loyalty.","Gucci Gang","Let Me Love You","Love.","Goosebumps","Everyday We Lit","Silence","God's Plan","Rockstar","Perfect","Psycho","In My Feelings","Sad!","Havana","Lucid Dreams","I Like It","Meant To Be","Nice For What","I Fall Apart","Look Alive","Despacito","Believer","Yes Indeed","Ric Flair Drip","Gucci Gang","Girls Like You","Better Now","Boo'd Up","FEFE","Walk It Talk It","Plug Walk","Gummo","Bodak Yellow (Money Moves)","Taste","MotorSport","Mine","No Limit","Sicko Mode","Nonstop","Finesse","The Middle","Moonlight","No Tears Left To Cry","Stir Fry","Freaky Friday","This Is America","Thunder","Let You Down","Love Lies","Friends","Bartier Cardi","Young Dumb &amp; Broke","New Rules","I Get The Bag","I'm Upset","Roll In Peace","Bank Account","Plain Jane","Shape Of You","Te Bote","Too Good At Goodbyes","All The Stars","Be Careful","Big Bank","Outside Today","Changes","All Girls Are The Same","Call Out My Name","Heaven","1-800-273-8255","Bad At Love","Drip Too Hard","The Way Life Goes","Him &amp; I","Eastside","I Love It","Japan","Youngblood","Congratulations","King's Dead","Mo Bamba","The Weekend","Old Town Road","Sunflower (Spider-Man: Into The Spider-Verse)","Without Me","Sicko Mode","Bad Guy","7 Rings","Wow.","Happier","Baby Shark","Thank U, Next","Middle Child","Going Bad","Ran$om","Drip Too Hard","Suge","Truth Hurts","No Guidance","Senorita","Talk","Better","Lucid Dreams","Pop Out","Mo Bamba","Panini","Money In The Grave","Thotiana","ZEZE","Sucker","Envy Me","Murder On My Mind","Goodbyes","Believer","I Don't Care","A Lot","Girls Like You","Break Up With Your Girlfriend, I'm Bored","Money","Swervin","Eastside","Sweet But Psycho","Bury A Friend","Dancing With A Stranger","Better Now","Look Back At It","The Git Up","Someone You Loved","Please Me","Pure Water","The London","Act Up","Wake Up In The Sky","You Need To Calm Down","Moonlight","Baby","Circles","Leave Me Alone","Taki Taki","Shotta Flow","Beautiful People","MIA","If I Can't Have You","Hot","When The Party's Over","Clout","Shallow","Sad!","EARFQUAKE","Robbery","I Like It","In My Feelings","High Hopes","ME!","HIGHEST IN THE ROOM","All I Want For Christmas Is You","Con Calma"],["Baauer","PSY","Macklemore &amp; Ryan Lewis Featuring Wanz","Imagine Dragons","Miley Cyrus","Miley Cyrus","Robin Thicke Featuring T.I. + Pharrell","Macklemore &amp; Ryan Lewis Featuring Ray Dalton","Drake","AWOLNATION","Daft Punk Featuring Pharrell Williams","Bruno Mars","Katy Perry","Ariana Grande Featuring Mac Miller","Justin Timberlake","Lil Wayne Featuring Drake &amp; Future","Lorde","A$AP Rocky Featuring Drake, 2 Chainz &amp; Kendrick Lamar","Rocko Featuring Future &amp; Rick Ross","P!nk Featuring Nate Ruess","Anna Kendrick","Ylvis","Avicii","PSY","J. Cole Featuring Miguel","Ciara","Florida Georgia Line","Selena Gomez","will.i.am &amp; Britney Spears","Wale Featuring Tiara Thomas Or Rihanna","Rihanna Featuring Mikky Ekko","Jay Z Featuring Justin Timberlake","Carly Rae Jepsen","Drake Featuring Majid Jordan","One Direction","Justin Timberlake Featuring JAY Z","One Direction","Taylor Swift","Lady Gaga","The Lumineers","Bruno Mars","Bruno Mars","Imagine Dragons","Demi Lovato","Justin Bieber Featuring Nicki Minaj","Mike WiLL Made-It Featuring Miley Cyrus, Wiz Khalifa &amp; Juicy J","Zedd Featuring Foxes","Sage The Gemini","Rihanna","Icona Pop Featuring Charli XCX","Taylor Swift","Sage The Gemini Featuring IamSu!","Eminem","Lana Del Rey &amp; Cedric Gervais","Calvin Harris Featuring Florence Welch","Capital Cities","Hadouken!","Alicia Keys Featuring Nicki Minaj","Ace Hood Featuring Future &amp; Rick Ross","Imagine Dragons","Pitbull Featuring Christina Aguilera","Calvin Harris Featuring Ellie Goulding","Rich Homie Quan","J. Dash","Swedish House Mafia Featuring John Martin","Kendrick Lamar","Fall Out Boy","Chris Brown Featuring Nicki Minaj","Kendrick Lamar Featuring Drake","OneRepublic","Lil Wayne Featuring 2 Chainz","Mariah Carey Featuring Miguel","YG Featuring Jeezy &amp; Rich Homie Quan","Kendrick Lamar","Trinidad James","Katy Perry Featuring Juicy J","Iggy Azalea Featuring Charli XCX","Pharrell Williams","John Legend","Idina Menzel","Meghan Trainor","Ariana Grande Featuring Iggy Azalea","Jason Derulo Featuring 2 Chainz","MAGIC!","Pitbull Featuring Ke$ha","DJ Snake &amp; Lil Jon","Nicki Minaj","OneRepublic","PSY","Taylor Swift","Jason Derulo Featuring Snoop Dogg","Miley Cyrus","Sia","Chris Brown Featuring Lil Wayne &amp; French Montana Or Too $hort Or Tyga","Bobby Shmurda","Sam Smith","Lorde","Tove Lo","AWOLNATION","Jessie J, Ariana Grande &amp; Nicki Minaj","Passenger","Eminem Featuring Rihanna","A Great Big World &amp; Christina Aguilera","Ty Dolla $ign Featuring Wiz Khalifa &amp; DJ Mustard","Bastille","Iggy Azalea Featuring Rita Ora","Ariana Grande Featuring Zedd","Beyonce Featuring Jay Z","Becky G","Imagine Dragons","YG Featuring Jeezy &amp; Rich Homie Quan","Nico &amp; Vinz","Calvin Harris","Avicii","Rich Gang Featuring Young Thug &amp; Rich Homie Quan","Enrique Iglesias Featuring Descemer Bueno &amp; Gente de Zona","Clean Bandit Featuring Jess Glynne","One Direction","Maroon 5","Katy Perry","Eminem","Mike WiLL Made-It Featuring Miley Cyrus, Wiz Khalifa &amp; Juicy J","Kid Ink Featuring Chris Brown","Imagine Dragons","Lorde","Macklemore &amp; Ryan Lewis Featuring Ray Dalton","Trey Songz","MKTO","Ellie Goulding","Shakira Featuring Rihanna","Charli XCX","Martin Garrix","Wiz Khalifa","Maroon 5","Katy Perry","Rae Sremmurd","Disclosure Featuring Sam Smith","Iggy Azalea","Demi Lovato","Chris Brown Featuring Usher &amp; Rick Ross","Aloe Blacc","5 Seconds Of Summer","Tinashe Featuring ScHoolboy Q","Drake Featuring Majid Jordan","Miley Cyrus","Jeremih Featuring YG","Echosmith","Avicii","Jason Derulo","Ed Sheeran","Fetty Wap","Mark Ronson Featuring Bruno Mars","Silento","Wiz Khalifa Featuring Charlie Puth","Ed Sheeran","The Weeknd","Maroon 5","The Weeknd","OMI","The Weeknd","Fetty Wap Featuring Remy Boyz","Taylor Swift","Omarion Featuring Chris Brown &amp; Jhene Aiko","Major Lazer &amp; DJ Snake Featuring MO","Taylor Swift","Skrillex &amp; Diplo With Justin Bieber","Meghan Trainor","Hozier","Ellie Goulding","Drake","T-Wayne","Justin Bieber","Fifth Harmony Featuring Kid Ink","PSY","Rae Sremmurd","Fetty Wap Featuring Monty","Selena Gomez Featuring A$AP Rocky","Beyonce","Bobby Shmurda","Big Sean Featuring E-40","WALK THE MOON","Adele","Nicki Minaj Featuring Drake, Lil Wayne &amp; Chris Brown","Flo Rida Featuring Sage The Gemini &amp; Lookas","Taylor Swift Featuring Kendrick Lamar","Rich Homie Quan","Meghan Trainor","Sia","Rihanna","Sia","Sam Smith","Shawn Mendes","iLoveMemphis","Idina Menzel","The Weeknd","O.T. Genasis","Trey Songz","David Guetta Featuring Nicki Minaj, Bebe Rexha &amp; Afrojack","Fall Out Boy","Meek Mill Featuring Chris Brown &amp; Nicki Minaj","Jason Derulo","Ariana Grande &amp; The Weeknd","Big Sean Featuring Drake","Jessie J, Ariana Grande &amp; Nicki Minaj","Natalie La Rose Featuring Jeremih","R. City Featuring Adam Levine","Jidenna Featuring Roman GianArthur","Meghan Trainor","Drake &amp; Future","One Direction","I LOVE MAKONNEN Featuring Drake","Rihanna &amp; Kanye West &amp; Paul McCartney","Usher Featuring Juicy J","Ed Sheeran","Sam Smith","Drake","Rachel Platten","Demi Lovato","Nick Jonas","Selena Gomez","Fetty Wap","Drake","Ariana Grande","Future Featuring Drake","DJ Snake &amp; AlunaGeorge","Desiigner","Rihanna Featuring Drake","Justin Bieber","Drake Featuring WizKid &amp; Kyla","Rihanna","Justin Bieber","The Chainsmokers Featuring Halsey","twenty one pilots","The Chainsmokers Featuring Daya","Adele","Fifth Harmony Featuring Ty Dolla $ign","Bryson Tiller","Future Featuring The Weeknd","Lukas Graham","G-Eazy x Bebe Rexha","Drake","twenty one pilots","Calvin Harris Featuring Rihanna","Mike Posner","Sia Featuring Sean Paul","Justin Bieber","Bryson Tiller","Zayn","D.R.A.M. Featuring Lil Yachty","Major Lazer Featuring Justin Bieber &amp; MO","Drake &amp; Future","The Weeknd","twenty one pilots","Kevin Gates","Drake Featuring Rihanna","Justin Timberlake","Flo Rida","Silento","Drake","Fetty Wap Featuring Remy Boyz","The Chainsmokers Featuring Rozes","gnash Featuring Olivia O'Brien","Post Malone","Jeremih","Shawn Mendes","Ariana Grande","Kent Jones","DNCE","DJ Snake Featuring Justin Bieber","Fetty Wap","Zara Larsson &amp; MNEK","Kevin Gates","The Weeknd Featuring Daft Punk","Mark Ronson Featuring Bruno Mars","Shawn Mendes","Lil Wayne, Wiz Khalifa &amp; Imagine Dragons With Logic &amp; Ty Dolla $ign Feat. X Ambassadors","Yo Gotti Featuring Nicki Minaj","Desiigner","Major Lazer &amp; DJ Snake Featuring MO","Travis Scott","Charlie Puth Featuring Selena Gomez","Ariana Grande","Ariana Grande Featuring Nicki Minaj","The Weeknd","Drake Featuring The Throne","Tory Lanez","Wiz Khalifa Featuring Charlie Puth","Alessia Cara","DJ Snake Featuring Bipolar Sunshine","O.T. Genasis Featuring Young Dolph","Selena Gomez","Selena Gomez","Flume Featuring Kai","Nick Jonas Featuring Tove Lo","DJ Khaled Featuring Drake","Rae Sremmurd Featuring Gucci Mane","Adele","Lil Uzi Vert","Meghan Trainor","Kiiara","Luis Fonsi &amp; Daddy Yankee Featuring Justin Bieber","Ed Sheeran","Migos Featuring Lil Uzi Vert","Kendrick Lamar","Bruno Mars","Post Malone Featuring Quavo","Lil Uzi Vert","Future","The Chainsmokers Featuring Halsey","DJ Khaled Featuring Justin Bieber, Quavo, Chance The Rapper &amp; Lil Wayne","KYLE Featuring Lil Yachty","French Montana Featuring Swae Lee","Rae Sremmurd Featuring Gucci Mane","Cardi B","Khalid","The Weeknd Featuring Daft Punk","DJ Khaled Featuring Rihanna &amp; Bryson Tiller","21 Savage","Big Sean","Zay Hilfigerrr &amp; Zayion McCall","Kodak Black","Bruno Mars","Ayo &amp; Teo","Sam Hunt","Migos","A Boogie Wit da Hoodie Featuring Kodak Black","Rae Sremmurd","Logic Featuring Alessia Cara &amp; Khalid","Imagine Dragons","Post Malone Featuring 21 Savage","The Chainsmokers &amp; Coldplay","Drake","Childish Gambino","James Arthur","Taylor Swift","Kendrick Lamar","Yo Gotti Featuring Nicki Minaj","Zedd &amp; Alessia Cara","Amine","Migos Featuring Gucci Mane","Julia Michaels","J Balvin &amp; Willy William Featuring Beyonce","Charlie Puth","D.R.A.M. Featuring Lil Yachty","Justin Timberlake","Playboi Carti","Demi Lovato","XXXTENTACION","Gucci Mane Featuring Migos","Kygo x Selena Gomez","Zayn / Taylor Swift","Khalid","The Chainsmokers","Ariana Grande Featuring Nicki Minaj","Liam Payne Featuring Quavo","twenty one pilots","Shawn Mendes","Machine Gun Kelly x Camila Cabello","Drake","Gucci Mane Featuring Drake","Calvin Harris Featuring Frank Ocean &amp; Migos","The Weeknd Featuring Daft Punk","Clean Bandit Featuring Sean Paul &amp; Anne-Marie","The Chainsmokers Featuring Daya","SZA Featuring Travis Scott","Tay-K","Drake Featuring Quavo &amp; Travis Scott","Travis Scott","Kendrick Lamar Featuring Rihanna","Lil Pump","DJ Snake Featuring Justin Bieber","Kendrick Lamar Featuring Zacari","Travis Scott","YFN Lucci Featuring PnB Rock","Marshmello Featuring Khalid","Drake","Post Malone Featuring 21 Savage","Ed Sheeran","Post Malone Featuring Ty Dolla $ign","Drake","XXXTENTACION","Camila Cabello Featuring Young Thug","Juice WRLD","Cardi B, Bad Bunny &amp; J Balvin","Bebe Rexha &amp; Florida Georgia Line","Drake","Post Malone","BlocBoy JB Featuring Drake","Luis Fonsi &amp; Daddy Yankee Featuring Justin Bieber","Imagine Dragons","Lil Baby &amp; Drake","Offset &amp; Metro Boomin","Lil Pump","Maroon 5 Featuring Cardi B","Post Malone","Ella Mai","6ix9ine Featuring Nicki Minaj &amp; Murda Beatz","Migos Featuring Drake","Rich The Kid","6ix9ine","Cardi B","Tyga Featuring Offset","Migos, Nicki Minaj &amp; Cardi B","Bazzi","G-Eazy Featuring A$AP Rocky &amp; Cardi B","Travis Scott","Drake","Bruno Mars &amp; Cardi B","Zedd, Maren Morris &amp; Grey","XXXTENTACION","Ariana Grande","Migos","Lil Dicky Featuring Chris Brown","Childish Gambino","Imagine Dragons","NF","Khalid &amp; Normani","Marshmello &amp; Anne-Marie","Cardi B Featuring 21 Savage","Khalid","Dua Lipa","Gucci Mane Featuring Migos","Drake","Kodak Black Featuring XXXTENTACION","21 Savage","A$AP Ferg Featuring Nicki Minaj","Ed Sheeran","Casper Magico, Nio Garcia, Darell, Nicky Jam, Ozuna &amp; Bad Bunny","Sam Smith","Kendrick Lamar &amp; SZA","Cardi B","YG Featuring 2 Chainz, Big Sean &amp; Nicki Minaj","YoungBoy Never Broke Again","XXXTENTACION","Juice WRLD","The Weeknd","Kane Brown","Logic Featuring Alessia Cara &amp; Khalid","Halsey","Lil Baby &amp; Gunna","Lil Uzi Vert Featuring Nicki Minaj","G-Eazy &amp; Halsey","benny blanco, Halsey &amp; Khalid","Kanye West &amp; Lil Pump","Famous Dex","5 Seconds Of Summer","Post Malone Featuring Quavo","Jay Rock, Kendrick Lamar, Future &amp; James Blake","Sheck Wes","SZA","Lil Nas X Featuring Billy Ray Cyrus","Post Malone &amp; Swae Lee","Halsey","Travis Scott","Billie Eilish","Ariana Grande","Post Malone","Marshmello &amp; Bastille","Pinkfong","Ariana Grande","J. Cole","Meek Mill Featuring Drake","Lil Tecca","Lil Baby &amp; Gunna","DaBaby","Lizzo","Chris Brown Featuring Drake","Shawn Mendes &amp; Camila Cabello","Khalid","Khalid","Juice WRLD","Polo G Featuring Lil Tjay","Sheck Wes","Lil Nas X","Drake Featuring Rick Ross","Blueface","Kodak Black Featuring Travis Scott &amp; Offset","Jonas Brothers","Calboy","YNW Melly","Post Malone Featuring Young Thug","Imagine Dragons","Ed Sheeran &amp; Justin Bieber","21 Savage","Maroon 5 Featuring Cardi B","Ariana Grande","Cardi B","A Boogie Wit da Hoodie Featuring 6ix9ine","benny blanco, Halsey &amp; Khalid","Ava Max","Billie Eilish","Sam Smith &amp; Normani","Post Malone","A Boogie Wit da Hoodie","Blanco Brown","Lewis Capaldi","Cardi B &amp; Bruno Mars","Mustard &amp; Migos","Young Thug, J. Cole &amp; Travis Scott","City Girls","Gucci Mane X Bruno Mars X Kodak Black","Taylor Swift","XXXTENTACION","Lil Baby &amp; DaBaby","Post Malone","Flipp Dinero","DJ Snake Featuring Selena Gomez, Ozuna &amp; Cardi B","NLE Choppa","Ed Sheeran Featuring Khalid","Bad Bunny Featuring Drake","Shawn Mendes","Young Thug Featuring Gunna","Billie Eilish","Offset Featuring Cardi B","Lady Gaga &amp; Bradley Cooper","XXXTENTACION","Tyler, The Creator","Juice WRLD","Cardi B, Bad Bunny &amp; J Balvin","Drake","Panic! At The Disco","Taylor Swift Featuring Brendon Urie","Travis Scott","Mariah Carey","Daddy Yankee &amp; Katy Perry Featuring Snow"],[2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2013,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2014,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2015,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2016,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2017,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2018,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019,2019],[100,98.6666666666667,97.3333333333333,96,94.6666666666667,93.3333333333333,92,90.6666666666667,89.3333333333333,88,86.6666666666667,85.3333333333333,84,82.6666666666667,81.3333333333333,80,78.6666666666667,77.3333333333333,76,74.6666666666667,73.3333333333333,72,70.6666666666667,69.3333333333333,68,66.6666666666667,65.3333333333333,64,62.6666666666667,61.3333333333333,60,58.6666666666667,57.3333333333333,56,54.6666666666667,53.3333333333333,52,50.6666666666667,49.3333333333333,48,46.6666666666667,45.3333333333333,44,42.6666666666667,41.3333333333333,40,38.6666666666667,37.3333333333333,36,34.6666666666667,33.3333333333333,32,30.6666666666667,29.3333333333333,28,26.6666666666667,25.3333333333333,24,22.6666666666667,21.3333333333333,20,18.6666666666667,17.3333333333333,16,14.6666666666667,13.3333333333333,12,10.6666666666667,9.33333333333333,8,6.66666666666667,5.33333333333333,4,2.66666666666667,1.33333333333333,100,98.6666666666667,97.3333333333333,96,94.6666666666667,93.3333333333333,92,90.6666666666667,89.3333333333333,88,86.6666666666667,85.3333333333333,84,82.6666666666667,81.3333333333333,80,78.6666666666667,77.3333333333333,76,74.6666666666667,73.3333333333333,72,70.6666666666667,69.3333333333333,68,66.6666666666667,65.3333333333333,64,62.6666666666667,61.3333333333333,60,58.6666666666667,57.3333333333333,56,54.6666666666667,53.3333333333333,52,50.6666666666667,49.3333333333333,48,46.6666666666667,45.3333333333333,44,42.6666666666667,41.3333333333333,40,38.6666666666667,37.3333333333333,36,34.6666666666667,33.3333333333333,32,30.6666666666667,29.3333333333333,28,26.6666666666667,25.3333333333333,24,22.6666666666667,21.3333333333333,20,18.6666666666667,17.3333333333333,16,14.6666666666667,13.3333333333333,12,10.6666666666667,9.33333333333333,8,6.66666666666667,5.33333333333333,4,2.66666666666667,1.33333333333333,100,98.6666666666667,97.3333333333333,96,94.6666666666667,93.3333333333333,92,90.6666666666667,89.3333333333333,88,86.6666666666667,85.3333333333333,84,82.6666666666667,81.3333333333333,80,78.6666666666667,77.3333333333333,76,74.6666666666667,73.3333333333333,72,70.6666666666667,69.3333333333333,68,66.6666666666667,65.3333333333333,64,62.6666666666667,61.3333333333333,60,58.6666666666667,57.3333333333333,56,54.6666666666667,53.3333333333333,52,50.6666666666667,49.3333333333333,48,46.6666666666667,45.3333333333333,44,42.6666666666667,41.3333333333333,40,38.6666666666667,37.3333333333333,36,34.6666666666667,33.3333333333333,32,30.6666666666667,29.3333333333333,28,26.6666666666667,25.3333333333333,24,22.6666666666667,21.3333333333333,20,18.6666666666667,17.3333333333333,16,14.6666666666667,13.3333333333333,12,10.6666666666667,9.33333333333333,8,6.66666666666667,5.33333333333333,4,2.66666666666667,1.33333333333333,100,98.6666666666667,97.3333333333333,96,94.6666666666667,93.3333333333333,92,90.6666666666667,89.3333333333333,88,86.6666666666667,85.3333333333333,84,82.6666666666667,81.3333333333333,80,78.6666666666667,77.3333333333333,76,74.6666666666667,73.3333333333333,72,70.6666666666667,69.3333333333333,68,66.6666666666667,65.3333333333333,64,62.6666666666667,61.3333333333333,60,58.6666666666667,57.3333333333333,56,54.6666666666667,53.3333333333333,52,50.6666666666667,49.3333333333333,48,46.6666666666667,45.3333333333333,44,42.6666666666667,41.3333333333333,40,38.6666666666667,37.3333333333333,36,34.6666666666667,33.3333333333333,32,30.6666666666667,29.3333333333333,28,26.6666666666667,25.3333333333333,24,22.6666666666667,21.3333333333333,20,18.6666666666667,17.3333333333333,16,14.6666666666667,13.3333333333333,12,10.6666666666667,9.33333333333333,8,6.66666666666667,5.33333333333333,4,2.66666666666667,1.33333333333333,100,98.6666666666667,97.3333333333333,96,94.6666666666667,93.3333333333333,92,90.6666666666667,89.3333333333333,88,86.6666666666667,85.3333333333333,84,82.6666666666667,81.3333333333333,80,78.6666666666667,77.3333333333333,76,74.6666666666667,73.3333333333333,72,70.6666666666667,69.3333333333333,68,66.6666666666667,65.3333333333333,64,62.6666666666667,61.3333333333333,60,58.6666666666667,57.3333333333333,56,54.6666666666667,53.3333333333333,52,50.6666666666667,49.3333333333333,48,46.6666666666667,45.3333333333333,44,42.6666666666667,41.3333333333333,40,38.6666666666667,37.3333333333333,36,34.6666666666667,33.3333333333333,32,30.6666666666667,29.3333333333333,28,26.6666666666667,25.3333333333333,24,22.6666666666667,21.3333333333333,20,18.6666666666667,17.3333333333333,16,14.6666666666667,13.3333333333333,12,10.6666666666667,9.33333333333333,8,6.66666666666667,5.33333333333333,4,2.66666666666667,1.33333333333333,100,98.6666666666667,97.3333333333333,96,94.6666666666667,93.3333333333333,92,90.6666666666667,89.3333333333333,88,86.6666666666667,85.3333333333333,84,82.6666666666667,81.3333333333333,80,78.6666666666667,77.3333333333333,76,74.6666666666667,73.3333333333333,72,70.6666666666667,69.3333333333333,68,66.6666666666667,65.3333333333333,64,62.6666666666667,61.3333333333333,60,58.6666666666667,57.3333333333333,56,54.6666666666667,53.3333333333333,52,50.6666666666667,49.3333333333333,48,46.6666666666667,45.3333333333333,44,42.6666666666667,41.3333333333333,40,38.6666666666667,37.3333333333333,36,34.6666666666667,33.3333333333333,32,30.6666666666667,29.3333333333333,28,26.6666666666667,25.3333333333333,24,22.6666666666667,21.3333333333333,20,18.6666666666667,17.3333333333333,16,14.6666666666667,13.3333333333333,12,10.6666666666667,9.33333333333333,8,6.66666666666667,5.33333333333333,4,2.66666666666667,1.33333333333333,100,98.6666666666667,97.3333333333333,96,94.6666666666667,93.3333333333333,92,90.6666666666667,89.3333333333333,88,86.6666666666667,85.3333333333333,84,82.6666666666667,81.3333333333333,80,78.6666666666667,77.3333333333333,76,74.6666666666667,73.3333333333333,72,70.6666666666667,69.3333333333333,68,66.6666666666667,65.3333333333333,64,62.6666666666667,61.3333333333333,60,58.6666666666667,57.3333333333333,56,54.6666666666667,53.3333333333333,52,50.6666666666667,49.3333333333333,48,46.6666666666667,45.3333333333333,44,42.6666666666667,41.3333333333333,40,38.6666666666667,37.3333333333333,36,34.6666666666667,33.3333333333333,32,30.6666666666667,29.3333333333333,28,26.6666666666667,25.3333333333333,24,22.6666666666667,21.3333333333333,20,18.6666666666667,17.3333333333333,16,14.6666666666667,13.3333333333333,12,10.6666666666667,9.33333333333333,8,6.66666666666667,5.33333333333333,4,2.66666666666667,1.33333333333333]],"container":"<table class=\"display fill-container\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Rank<\/th>\n      <th>Title<\/th>\n      <th>Artist<\/th>\n      <th>Year<\/th>\n      <th>Points<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"bPaginate":false,"columnDefs":[{"className":"dt-right","targets":[1,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="s-top-25-artists" class="section level1">
+<h1>2010s Top 25 Artists</h1>
+<div id="column-3" class="section level2 sidebar" data-width="500">
+<h2 class="sidebar" data-width="500">Column</h2>
+<div id="insights-1" class="section level3">
+<h3>Insights</h3>
+</div>
+<div id="rationale-behind-analysing-solo-success" class="section level3">
+<h3>Rationale behind analysing solo success</h3>
+<p>When I scraped the music data from the Billboard Charts, I noticed there were many artists who had duets or collaborations that were equally as popular compared to their solo songs. For ease of the project, I elected to analyse artists who sung solos or who otherwise have frequently collaborated with the same artists over time. Therefore, there is some bias in the dataset in that it does not accurately reflect an artist’s overall popularity in terms of combined single and collaborative success. However, the data does paint an interesting portrait as to the most popular artists on a solo basis.</p>
+</div>
+<div id="data-tidying" class="section level3">
+<h3>Data tidying</h3>
+<p>In determining the top 25 artists across the 2010s for each Billboard category, I created a simple function that collated all the points an artist had accumulated over time. I then ranked the artist according to the total points they earned, filtered the top 25 artists, and subsequently created a column graph that positioned the artists in terms of total points earned.</p>
+</div>
+<div id="conclusions" class="section level3">
+<h3>Conclusions</h3>
+<ul>
+<li><p>Among all the artists who made the top 25 charts, Taylor Swift, Drake and Bruno Mars consistently performed well over the 2010s, possibly highlighting a growing preference for pop/rap style of music.</p></li>
+<li><p>Interestingly, soundtracks appeared to be the most popular type of album over the 2010s. This is an area of interest that I would like to focus on in the near future!</p></li>
+<li><p>Some key differences were also observed between the Top 25 charts for the Billboard Hot 100 and Albums data. For example, Luke Bryan scored quite high on the Top 25 albums chart, but nevertheless failed to make it into the Top 25 chart for the Hot 100s. This raised some key questions as to whether Hot 100 success was really correlated to album success.</p></li>
+</ul>
+</div>
+</div>
+<div id="column-4" class="section level2">
+<h2>Column</h2>
+<div id="top-25-artists-function" class="section level3">
+<h3>Top 25 Artists Function</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>top_25_2010s <span class="ot">&lt;-</span> <span class="cf">function</span>(billboard){</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>total_points <span class="ot">&lt;-</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  billboard <span class="sc">%&gt;%</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Artist) <span class="sc">%&gt;%</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Points),</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">Points =</span> sum)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Points))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>ranked <span class="ot">&lt;-</span> </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  total_points <span class="sc">%&gt;%</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Rank =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(total_points)) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Rank <span class="sc">&lt;=</span> <span class="dv">25</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> ranked, </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Points,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>           <span class="at">y =</span> <span class="fu">reorder</span>(Artist, Points)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>           )) <span class="sc">+</span> </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">&quot;steelblue4&quot;</span>) <span class="sc">+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;Points&quot;</span>, <span class="at">y =</span> <span class="st">&quot;Artist&quot;</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+</div>
+</div>
+<div id="column-5" class="section level2 tabset">
+<h2 class="tabset">Column</h2>
+<div id="top-25---hot-100" class="section level3">
+<h3>Top 25 - Hot 100</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><img src="index_files/figure-html/top-25-h100-1.png" width="576" data-figure-id=fig1 /></p>
+</div>
+<div id="top-25---albums" class="section level3">
+<h3>Top 25 - Albums</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><img src="index_files/figure-html/top-25-albums-1.png" width="576" data-figure-id=fig2 /></p>
+</div>
+<div id="top-25---streams" class="section level3">
+<h3>Top 25 - Streams</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><img src="index_files/figure-html/top-25-streams-1.png" width="576" data-figure-id=fig3 /></p>
+</div>
+<div id="top-25---radio" class="section level3">
+<h3>Top 25 - Radio</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><img src="index_files/figure-html/top-25-radio-1.png" width="576" data-figure-id=fig4 /></p>
+</div>
+<div id="top-25---digital-sales" class="section level3">
+<h3>Top 25 - Digital Sales</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><img src="index_files/figure-html/top-25-digital-sales-1.png" width="576" data-figure-id=fig5 /></p>
+</div>
+</div>
+</div>
+<div id="top-10-artists-year-by-year" class="section level1">
+<h1>Top 10 Artists Year-by-Year</h1>
+<div id="column-6" class="section level2 sidebar" data-width="500">
+<h2 class="sidebar" data-width="500">Column</h2>
+<div id="insights-2" class="section level3">
+<h3>Insights</h3>
+</div>
+<div id="data-tidying-1" class="section level3">
+<h3>Data tidying</h3>
+<p>After collating the data and tabulating 2010s Top 25 artists across each Billboard category, I wanted to segment the data further and produced two ggplot graphs to analyse how 2010s Top 10 artists progressed annually and cumulatively through the years.</p>
+<ol style="list-style-type: decimal">
+<li><p>To do so, I created a function to annualise the total points that each artist earned from the raw Billboard data.</p></li>
+<li><p>I then collated all the points each artist earned year-by-year using the <strong>pivot_wide</strong> function and summed all the values to find the decade-end aggregate total. I then ran the filter function to find the top 10 artists based on the aggregate total, creating the <strong>“Wide Table”</strong> as shown in the tab on the right. Note that in the years the artists did not make the Billboard Charts, I allocated a score of 0.</p></li>
+<li><p>Then using the <strong>pivot_long</strong> function, I created a long table and found the cumulative points each artist earned every year using the <strong>cumsum</strong> function, as shown in the <strong>“Long Table”</strong> shown in the tab to the right.</p></li>
+<li><p>After completing all the above steps, I was able to create two ggplot graphs, naming the y-variable as the year and the x-variable as either Points or cum_Points in the aesthetic mapping, grouping by each artist to create a facet format.</p></li>
+</ol>
+<p>Please visit the next tab to see how well the Top 10 artists performed over time!</p>
+</div>
+</div>
+<div id="column-7" class="section level2">
+<h2>Column</h2>
+<div id="tidying-the-data" class="section level3">
+<h3>Tidying the data</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>annual_score <span class="ot">&lt;-</span> <span class="cf">function</span>(billboard){ </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>points <span class="ot">&lt;-</span> </span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  billboard <span class="sc">%&gt;%</span> </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Artist, Year) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise_at</span>(<span class="fu">vars</span>(Points),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>               <span class="fu">list</span>(<span class="at">Points =</span> sum)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Year,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>          <span class="fu">desc</span>(Points)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Year)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a> t10_artists_h100_wide <span class="ot">&lt;-</span> </span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annual_score</span>(hot_100) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_wider</span>(<span class="at">names_from =</span> <span class="st">&quot;Year&quot;</span>, <span class="at">values_from =</span> <span class="st">&quot;Points&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(<span class="fu">is.na</span>(.), <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Aggregate =</span> <span class="fu">rowSums</span>(.[<span class="dv">2</span><span class="sc">:</span><span class="dv">11</span>])) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Aggregate)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">top_n</span>(<span class="dv">10</span>)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>t10_artists_h100_long <span class="ot">&lt;-</span> </span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  t10_artists_h100_wide <span class="sc">%&gt;%</span> </span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>Artist, </span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">&quot;Year&quot;</span>, </span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">&quot;Points&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(Year, <span class="st">&quot;Aggregate&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Artist) <span class="sc">%&gt;%</span> </span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cum_Points =</span> <span class="fu">cumsum</span>(Points))</span></code></pre></div>
+</div>
+</div>
+<div id="column-8" class="section level2 tabset">
+<h2 class="tabset">Column</h2>
+<div id="wide-table" class="section level3">
+<h3>Wide Table</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-e2282de85c6a8395ce8e" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e2282de85c6a8395ce8e">{"x":{"filter":"none","vertical":false,"fillContainer":true,"data":[["1","2","3","4","5","6","7","8","9","10"],["Taylor Swift","Drake","Bruno Mars","Rihanna","Katy Perry","Adele","Imagine Dragons","Maroon 5","Ed Sheeran","Ariana Grande"],[116,110,83,140,84,0,0,39,0,0],[27,16,256,174,211,177,0,0,0,0],[68,0,75,99,216,214,10,83,0,0],[115,69,254,105,91,0,191,179,26,0],[88,4,0,0,76,0,122,111,94,0],[293,73,0,53,0,66,0,151,175,34],[22,137,0,88,0,187,0,0,0,115],[62,100,183,68,0,13,142,0,161,0],[77,346,0,0,0,0,176,43,129,120],[62,0,0,0,0,0,0,0,0,277],[930,855,851,727,678,657,641,606,585,546]],"container":"<table class=\"display fill-container\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Artist<\/th>\n      <th>2010<\/th>\n      <th>2011<\/th>\n      <th>2012<\/th>\n      <th>2013<\/th>\n      <th>2014<\/th>\n      <th>2015<\/th>\n      <th>2016<\/th>\n      <th>2017<\/th>\n      <th>2018<\/th>\n      <th>2019<\/th>\n      <th>Aggregate<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"bPaginate":false,"columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10,11,12]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="long-table" class="section level3">
+<h3>Long Table</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="htmlwidget-162eb2176dd2ad8f3de4" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-162eb2176dd2ad8f3de4">{"x":{"filter":"none","vertical":false,"fillContainer":true,"data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100"],["Taylor Swift","Taylor Swift","Taylor Swift","Taylor Swift","Taylor Swift","Taylor Swift","Taylor Swift","Taylor Swift","Taylor Swift","Taylor Swift","Drake","Drake","Drake","Drake","Drake","Drake","Drake","Drake","Drake","Drake","Bruno Mars","Bruno Mars","Bruno Mars","Bruno Mars","Bruno Mars","Bruno Mars","Bruno Mars","Bruno Mars","Bruno Mars","Bruno Mars","Rihanna","Rihanna","Rihanna","Rihanna","Rihanna","Rihanna","Rihanna","Rihanna","Rihanna","Rihanna","Katy Perry","Katy Perry","Katy Perry","Katy Perry","Katy Perry","Katy Perry","Katy Perry","Katy Perry","Katy Perry","Katy Perry","Adele","Adele","Adele","Adele","Adele","Adele","Adele","Adele","Adele","Adele","Imagine Dragons","Imagine Dragons","Imagine Dragons","Imagine Dragons","Imagine Dragons","Imagine Dragons","Imagine Dragons","Imagine Dragons","Imagine Dragons","Imagine Dragons","Maroon 5","Maroon 5","Maroon 5","Maroon 5","Maroon 5","Maroon 5","Maroon 5","Maroon 5","Maroon 5","Maroon 5","Ed Sheeran","Ed Sheeran","Ed Sheeran","Ed Sheeran","Ed Sheeran","Ed Sheeran","Ed Sheeran","Ed Sheeran","Ed Sheeran","Ed Sheeran","Ariana Grande","Ariana Grande","Ariana Grande","Ariana Grande","Ariana Grande","Ariana Grande","Ariana Grande","Ariana Grande","Ariana Grande","Ariana Grande"],["2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019","2010","2011","2012","2013","2014","2015","2016","2017","2018","2019"],[116,27,68,115,88,293,22,62,77,62,110,16,0,69,4,73,137,100,346,0,83,256,75,254,0,0,0,183,0,0,140,174,99,105,0,53,88,68,0,0,84,211,216,91,76,0,0,0,0,0,0,177,214,0,0,66,187,13,0,0,0,0,10,191,122,0,0,142,176,0,39,0,83,179,111,151,0,0,43,0,0,0,0,26,94,175,0,161,129,0,0,0,0,0,0,34,115,0,120,277],[116,143,211,326,414,707,729,791,868,930,110,126,126,195,199,272,409,509,855,855,83,339,414,668,668,668,668,851,851,851,140,314,413,518,518,571,659,727,727,727,84,295,511,602,678,678,678,678,678,678,0,177,391,391,391,457,644,657,657,657,0,0,10,201,323,323,323,465,641,641,39,39,122,301,412,563,563,563,606,606,0,0,0,26,120,295,295,456,585,585,0,0,0,0,0,34,149,149,269,546]],"container":"<table class=\"display fill-container\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Artist<\/th>\n      <th>Year<\/th>\n      <th>Points<\/th>\n      <th>cum_Points<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"bPaginate":false,"columnDefs":[{"className":"dt-right","targets":[3,4]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</div>
+<div id="progression-in-the-charts" class="section level1">
+<h1>Progression in the charts</h1>
+<div id="column-9" class="section level2 sidebar" data-width="600">
+<h2 class="sidebar" data-width="600">Column</h2>
+<div id="insights-3" class="section level3">
+<h3>Insights</h3>
+</div>
+<div id="hot-100---annual-success" class="section level3">
+<h3>Hot 100 - Annual Success</h3>
+<ul>
+<li>The graphs highlight some interesting information, with Drake and Ariana Grande consistently leading the way in terms of their single success in the Hot 100s year to year.</li>
+<li>Whilst Bruno Mars dipped down towards the middle of the 2010s, we see that he has upped his game and continued to rise through the all-time rankings of the 2010s.</li>
+</ul>
+</div>
+<div id="hot-100---cumulative-success" class="section level3">
+<h3>Hot 100 - Cumulative Success</h3>
+<ul>
+<li>Cumulatively, Taylor Swift, Drake and Bruno Mars appear to be the front winners in terms of their popularity through the 2010s, with widely popular artists like Rihanna and Katy Perry beginning to slow down sometime after 2014.</li>
+<li>Among the recent superstars that we see today, Ariana Grande and Ed Sheeran have rapidly gained momentum with no signs of slowing down, so I suspect these two artists will have continued success in terms of their new single releases in the future.</li>
+</ul>
+</div>
+<div id="albums---annual-success" class="section level3">
+<h3>Albums - Annual Success</h3>
+<ul>
+<li>One key note to address is the fact that most artists have not been able to sustain continued album success year-to-year. Whilst an artist may release a major hit every year, the same is not true for album releases.</li>
+<li>We also see many new artists that we didn’t see in the Hot 100 graphs (i.e. such as Jason Aldean, Kendrik Lamar &amp; Luke Bryan.). This begs the question whether there is a correlation between singles and album success.</li>
+</ul>
+</div>
+<div id="albums---cumulative-success" class="section level3">
+<h3>Albums - Cumulative Success</h3>
+<ul>
+<li><p>It is worth taking note that Soundtracks were at the No.1 spot and had accumulated a much higher degree of points than compared to other artists. Whilst I didn’t have time to explore this, it would be an interesting topic to see how greatly movies impact an album’s popularity.</p></li>
+<li><p>From a cumulative perspective, we can see a greater correlation between Hot 100 success and album success, with Adele, Drake, Ed Sheeran &amp; Taylor Swift again making the Top 10. With these conflicting findings between the annual and cumulative data, I wanted investigate the relationship between singles and album success by running a regression analysis.</p></li>
+</ul>
+</div>
+</div>
+<div id="column-10" class="section level2 tabset">
+<h2 class="tabset">Column</h2>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div id="hot-100---top-10-artists-by-annual-success" class="section level3">
+<h3>Hot 100 - Top 10 Artists by Annual Success</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><img src="index_files/figure-html/ggplot-top-10-artists-h100-annual-1.png" width="576" data-figure-id=fig6 /></p>
+</div>
+<div id="albums---top-10-artists-by-annual-success" class="section level3">
+<h3>Albums - Top 10 Artists by Annual Success</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><img src="index_files/figure-html/ggplot-top-10-artists-albums-annual-1.png" width="576" data-figure-id=fig7 /></p>
+</div>
+</div>
+<div id="column-11" class="section level2 tabset">
+<h2 class="tabset">Column</h2>
+<div id="hot-100---top-10-artists-by-cumulative-success" class="section level3">
+<h3>Hot 100 - Top 10 Artists by Cumulative Success</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><img src="index_files/figure-html/ggplot-top-10-artists-h100-cumulative-1.png" width="576" data-figure-id=fig8 /></p>
+</div>
+<div id="albums---top-10-artists-by-cumulative-success" class="section level3">
+<h3>Albums - Top 10 Artists by Cumulative Success</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><img src="index_files/figure-html/ggplot-top-10-artists-albums-cumulative-1.png" width="576" data-figure-id=fig9 /></p>
+</div>
+</div>
+</div>
+<div id="regression-analysis" class="section level1">
+<h1>Regression Analysis</h1>
+<div id="column-12" class="section level2 sidebar" data-width="600">
+<h2 class="sidebar" data-width="600">Column</h2>
+<div id="insights-4" class="section level3">
+<h3>Insights</h3>
+</div>
+<div id="background-1" class="section level3">
+<h3>Background</h3>
+<p>Whilst I wanted to run a regression of the Hot 100 data against the albums data, I was unable to do so as the Hot 100 data did not specify the albums that each song belonged to. However, this gave an opportunity to run a different regression between the Hot 100s data to the streaming, digital sales and radio data, shedding some insight as to how technology has shaped the way we listen to music.</p>
+<p>Thus, the aim of the regression was to investigate whether a relationship existed between the position of a song on one chart (i.e. radio, streams or digital sales) against its position on the Hot 100.</p>
+</div>
+<div id="data-tidying-2" class="section level3">
+<h3>Data tidying</h3>
+<ol style="list-style-type: decimal">
+<li><p>To run the regression, I needed to find a way to compare the score that each artist earned for each of their songs within the different Billboard Charts.</p></li>
+<li><p>I created a function that joined one data set at a time, joining by the “Title”, “Artist”, and “Year”, and renamed the “Points” columns to their chart titles for ease of comparison. Note that streaming data only became available on the Billboard domain after 2013, which is why I filtered the table to only look at the data from 2013 onward. Finally, I omitted the rank from the three data sets as the position of the songs were no longer relevant anymore; instead how they scored in points and how they compared to the number of points on the Hot 100 was the main factor.</p></li>
+</ol>
+</div>
+<div id="regression-equation" class="section level3">
+<h3>Regression Equation</h3>
+<p><span class="math display">\[
+hot_{100} = 15.5375 + 0.3735_{radio} + 0.3847_{streams} + 0.2079_{digitalsales}
+\]</span></p>
+</div>
+<div id="interpretation-of-regression-equation" class="section level3">
+<h3>Interpretation of Regression Equation</h3>
+<p><strong>Radio</strong></p>
+<p>As a song on the radio chart increases by one point, on average that song is 37.5% more likely to increase by one point on the Hot 100.</p>
+<p><strong>Streams</strong></p>
+<p>As a song on the streams chart increases by one point, on average that song is 38.5% more likely to increase by one point on the Hot 100.</p>
+<p><strong>Digital Sales</strong></p>
+<p>As a song on the digital sales chart increases by one point, on average that song is 20.8% more likely to increase by one point on the Hot 100.</p>
+<p><strong>Intercept</strong></p>
+<p>When a song that is listed on the Hot 100 has no feature on either the radio, stream or digital sales chart, their average number of points is around 15.53.</p>
+<p><strong>R^2</strong></p>
+<p>86.94 % of the variation on a song’s points in the Hot 100 is explained by the variation on its points in the charts.</p>
+</div>
+<div id="conclusion" class="section level3">
+<h3>Conclusion</h3>
+<p>It is interesting to note that streams had the highest marginal effect whilst digital sales had the lowest. It can indicate the trend of listening to music has slightly changed over the years from buying a single song or album online for a fee to subscribing to streaming service either for free or a monthly fee to obtain a large collection of songs and albums. It may indicate artists that are looking to capture a larger audience to supply their music via streaming services. It’s also worth noting that radio still has a large presence in how people listen to music and is not in fact outdated as some people may believe!</p>
+</div>
+</div>
+<div id="row-1" class="section level2">
+<h2>Row</h2>
+<div id="function-to-join-the-hot-100-radio-streams-digital-sales-data" class="section level3">
+<h3>Function to join the Hot 100, radio, streams &amp; digital sales data</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>join <span class="ot">&lt;-</span> <span class="cf">function</span>(hot_100, radio, streams, digital_sales){</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>t1_t2 <span class="ot">&lt;-</span> </span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(hot_100, radio, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;Title&quot;</span>, <span class="st">&quot;Artist&quot;</span>, <span class="st">&quot;Year&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Hot_100 =</span> Points.x,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">Radio =</span> Points.y,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">Rank =</span> Rank.x) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Rank.y)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>t1_t3 <span class="ot">&lt;-</span> </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(t1_t2, streams, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;Title&quot;</span>, <span class="st">&quot;Artist&quot;</span>, <span class="st">&quot;Year&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Rank =</span> Rank.x,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">Streams =</span> Points) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Rank.y)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>t1_t4 <span class="ot">&lt;-</span> </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(t1_t3, digital_sales, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&quot;Title&quot;</span>, <span class="st">&quot;Artist&quot;</span>, <span class="st">&quot;Year&quot;</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">Rank =</span> Rank.x,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>         <span class="at">Digital_sales =</span> Points) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Rank.y)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>h100_regression <span class="ot">&lt;-</span> </span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">join</span>(hot_100, radio, streams, digital_sales) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">replace</span>(<span class="fu">is.na</span>(.), <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">&gt;=</span> <span class="dv">2013</span>)</span></code></pre></div>
+</div>
+</div>
+<div id="row-2" class="section level2">
+<h2>Row</h2>
+<div id="plotting-the-fitted-values-against-the-hot-100-points" class="section level3">
+<h3>Plotting the fitted values against the Hot 100 points</h3>
+<div class="knitr-options" data-fig-width="576" data-fig-height="460">
+
+</div>
+<p><img src="index_files/figure-html/h100-fitted-ggplot-1.png" width="576" data-figure-id=fig10 /></p>
+</div>
+</div>
+</div>
+
+</div>
+
+<script>
+
+$(document).ready(function () {
+
+  // add bootstrap table styles to pandoc tables
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+
+  // initialize mathjax
+  var script = document.createElement("script");
+  script.type = "text/javascript";
+  script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+  document.getElementsByTagName("head")[0].appendChild(script);
+
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function () {
+  FlexDashboard.init({
+    theme: "cosmo",
+    fillPage: true,
+    orientation: "columns",
+    storyboard: false,
+    defaultFigWidth: 576,
+    defaultFigHeight: 460,
+    defaultFigWidthMobile: 360,
+    defaultFigHeightMobile: 460,
+    resize_reload: true
+  });
+});
+</script>
+
+</body>
+</html>
